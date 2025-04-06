@@ -1,0 +1,7 @@
+{
+  "name": "vozAmiga",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
