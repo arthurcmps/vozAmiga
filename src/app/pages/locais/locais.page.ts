@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-locais',
@@ -6,11 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./locais.page.scss'],
   standalone: false,
 })
-export class LocaisPage implements OnInit {
+export class LocaisPage {
+  locais = [
+    { texto: 'Quero ir para casa', icon: 'assets/icon/casa.png' },
+    { texto: 'Quero ir para escola', icon: 'assets/icon/escola.png' },
+    { texto: 'Quero ir ao parquinho', icon: 'assets/icon/parquinho.png' },
+    { texto: 'Quero ir à sala', icon: 'assets/icon/sala.png' },
+    { texto: 'Quero ir ao quarto', icon: 'assets/icon/quarto.png' },
+    { texto: 'Quero sair', icon: 'assets/icon/sair.png' }
+  ];
 
-  constructor() { }
-
-  ngOnInit() {
+  falar(texto: string) {
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = 'pt-BR';
+    window.speechSynthesis.speak(fala);
   }
-
 }

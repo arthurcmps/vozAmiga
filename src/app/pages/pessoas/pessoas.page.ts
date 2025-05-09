@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-pessoas',
@@ -6,11 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pessoas.page.scss'],
   standalone: false,
 })
-export class PessoasPage implements OnInit {
+export class PessoasPage {
+  pessoas = [
+    { texto: 'Quero falar com a mamãe', icon: 'assets/icon/mamae.png' },
+    { texto: 'Quero falar com o papai', icon: 'assets/icon/papai.png' },
+    { texto: 'Quero falar com a professora', icon: 'assets/icon/professora.png' },
+    { texto: 'Quero falar com o amigo', icon: 'assets/icon/amigo.png' },
+    { texto: 'Quero ficar sozinho', icon: 'assets/icon/sozinho.png' },
+    { texto: 'Quero um abraço', icon: 'assets/icon/abraco.png' }
+  ];
 
-  constructor() { }
-
-  ngOnInit() {
+  falar(texto: string) {
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = 'pt-BR';
+    window.speechSynthesis.speak(fala);
   }
-
 }
