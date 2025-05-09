@@ -11,11 +11,11 @@ export class InicialPage implements OnInit {
 
   categorias = [
     {nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos'},
-    {nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/categoria/sentimentos'},
-    {nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/categoria/brincar'},
-    {nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/categoria/pessoas'},
-    {nome: 'Necessidades', icone: 'assets/icon/necessidades.png', rota: 'categoria/necessidades'},
-    {nome: 'Locais', icone: 'assets/icon/locais.png', rota: 'categoria/locais'},
+    {nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/sentimentos'},
+    {nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/brincar'},
+    {nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/pessoas'},
+    {nome: 'Necessidades', icone: 'assets/icon/necessidades.png', rota: '/necessidades'},
+    {nome: 'Locais', icone: 'assets/icon/locais.png', rota: '/locais'},
   ];
 
   constructor(private navCtrl: NavController) { }

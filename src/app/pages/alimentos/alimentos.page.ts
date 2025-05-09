@@ -1,4 +1,6 @@
+import { I } from '@angular/common/common_module.d-Qx8B6pmN';
 import { Component } from '@angular/core';
+import { Icon } from 'ionicons/dist/types/components/icon/icon';
 
 @Component({
   selector: 'app-alimentos',
@@ -9,18 +11,22 @@ import { Component } from '@angular/core';
 export class AlimentosPage {
 
   frases = [
-    { texto: 'Quero comer.' },
-    { texto: 'Estou com fome.' },
-    { texto: 'Quero arroz.' },
-    { texto: 'Quero feijão.' },
-    { texto: 'Quero pão.' },
-    { texto: 'Quero fruta.' },
-    { texto: 'Não gosto disso.' },
-    { texto: 'Está gostoso.' },
-    { texto: 'Quero beber.' },
-    { texto: 'Estou com sede.' },
-    { texto: 'Quero suco.' },
-    { texto: 'Não quero mais.' },
+    { texto: 'Quero comer.', icon: 'assets/icon/comer.png' },
+    { texto: 'Estou com fome.', icon: 'assets/icon/fome.png' },
+    { texto: 'Estou comendo.', icon: 'assets/icon/comendo.png' }, 
+    { texto: 'Quero arroz.', icon: 'assets/icon/arroz.png' },
+    { texto: 'Quero carne.', icon: 'assets/icon/carne.png' },
+    { texto: 'Quero feijão.', icon: 'assets/icon/feijao.png' },
+    { texto: 'Quero pão.', icon: 'assets/icon/pao.png' },
+    { texto: 'Quero fruta.', icon: 'assets/icon/fruta.png' },
+    { texto: 'Não gosto disso.', icon: 'assets/icon/naogosto.png' },
+    { texto: 'Está gostoso.', icon: 'assets/icon/gostoso.png' },
+    { texto: 'Estou satisfeito.', icon: 'assets/icon/satisfeito.png' },
+    { texto: 'Quero beber.', icon: 'assets/icon/beber.png' },
+    { texto: 'Estou com sede.', icon: 'assets/icon/sede.png' },
+    { texto: 'Quero suco.', icon: 'assets/icon/suco.png' },
+    { texto: 'Quero água.', icon: 'assets/icon/agua.png' },
+    { texto: 'Não quero mais.', icon: 'assets/icon/naoquero.png' },
   ];
 
   falar(texto: string) {
