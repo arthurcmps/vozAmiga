@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 export class InicialPage implements OnInit {
 
   categorias = [
-    {nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/categoria/alimentos'},
+    {nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos'},
     {nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/categoria/sentimentos'},
     {nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/categoria/brincar'},
     {nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/categoria/pessoas'},
