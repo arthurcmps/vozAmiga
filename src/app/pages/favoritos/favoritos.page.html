@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item 
+      *ngFor="let frase of frasesFavoritas; let i = index" 
+      (click)="falar(frase)"
+      button
+    >
+      <ion-label>{{ frase }}</ion-label>
+      <ion-button 
+        fill="clear" 
+        color="danger" 
+        (click)="removerFavorito(i); $event.stopPropagation()"
+      >
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <div class="button-container">
+    <ion-button routerLink="/inicial" color="medium">
+      Voltar
+    </ion-button>
+  </div>
+</ion-content>

@@ -1,6 +1,5 @@
-import { I } from '@angular/common/common_module.d-Qx8B6pmN';
 import { Component } from '@angular/core';
-import { Icon } from 'ionicons/dist/types/components/icon/icon';
+import { FavoritosService } from '../../services/favoritos.service'; // ajuste o caminho se necessário
 
 @Component({
   selector: 'app-alimentos',
@@ -9,11 +8,10 @@ import { Icon } from 'ionicons/dist/types/components/icon/icon';
   standalone: false,
 })
 export class AlimentosPage {
-
   frases = [
     { texto: 'Quero comer.', icon: 'assets/icon/comer.png' },
     { texto: 'Estou com fome.', icon: 'assets/icon/fome.png' },
-    { texto: 'Estou comendo.', icon: 'assets/icon/comendo.png' }, 
+    { texto: 'Estou comendo.', icon: 'assets/icon/comendo.png' },
     { texto: 'Quero arroz.', icon: 'assets/icon/arroz.png' },
     { texto: 'Quero carne.', icon: 'assets/icon/carne.png' },
     { texto: 'Quero feijão.', icon: 'assets/icon/feijao.png' },
@@ -29,10 +27,15 @@ export class AlimentosPage {
     { texto: 'Não quero mais.', icon: 'assets/icon/naoquero.png' },
   ];
 
+  constructor(private favoritosService: FavoritosService) {}
+
   falar(texto: string) {
     const synth = window.speechSynthesis;
     const utterThis = new SpeechSynthesisUtterance(texto);
     synth.speak(utterThis);
   }
 
+  favoritar(frase: string) {
+    this.favoritosService.adicionar(frase);
+  }
 }
