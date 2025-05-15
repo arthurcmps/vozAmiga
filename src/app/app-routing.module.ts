@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'locais',
     loadChildren: () => import('./pages/locais/locais.module').then( m => m.LocaisPageModule)
   },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./pages/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
+  },
 
 ];
 
