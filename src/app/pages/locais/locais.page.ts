@@ -8,7 +8,7 @@ import { FavoritosService } from '../../services/favoritos.service';
   standalone: false,
 })
 export class LocaisPage {
-  locais = [
+  frases = [
     { texto: 'Quero ir para casa', icon: 'assets/icon/casa.png' },
     { texto: 'Quero ir para escola', icon: 'assets/icon/escola.png' },
     { texto: 'Quero ir ao parquinho', icon: 'assets/icon/parquinho.png' },

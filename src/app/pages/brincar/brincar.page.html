@@ -7,17 +7,29 @@
 <ion-content class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let item of brincadeiras">
-        <ion-card (click)="falar(item.texto)">
-          <img [src]="item.icon" alt="{{ item.texto }}" />
+      <ion-col size="6" *ngFor="let brincar of frases">
+        <ion-card (click)="falar(brincar.texto)">
+          <img [src]="brincar.icon" alt="{{ brincar.texto }}" />
           <ion-card-content class="ion-text-center">
-            {{ item.texto }}
+            {{ brincar.texto }}
+             <ion-button
+              size="small"
+              fill="clear"
+              color="warning"
+              slot="end"
+              (click)="favoritar(brincar.texto); $event.stopPropagation()"
+            >
+            <ion-icon name="star-outline"></ion-icon>
+            </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
       <div class="button-container">
       <ion-button routerLink="/inicial">Voltar</ion-button>
+            <ion-button routerLink="/favoritos" color="warning">
+        <ion-icon name="star" slot="start"></ion-icon>
+      </ion-button>
       </div>
   </ion-grid>
 </ion-content>

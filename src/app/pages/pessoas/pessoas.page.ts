@@ -8,7 +8,7 @@ import { FavoritosService } from '../../services/favoritos.service';
   standalone: false,
 })
 export class PessoasPage {
-  pessoas = [
+  frases = [
     { texto: 'Quero falar com a mamãe', icon: 'assets/icon/mamae.png' },
     { texto: 'Quero falar com o papai', icon: 'assets/icon/papai.png' },
     { texto: 'Quero falar com a professora', icon: 'assets/icon/professora.png' },

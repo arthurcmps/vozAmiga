@@ -8,7 +8,7 @@ import { FavoritosService } from '../../services/favoritos.service';
   standalone: false,
 })
 export class BrincarPage {
-  brincadeiras = [
+  frases = [
     { texto: 'Quero brincar de bola', icon: 'assets/icon/bola.png' },
     { texto: 'Vamos desenhar', icon: 'assets/icon/desenhar.png' },
     { texto: 'Quero brincar de massinha', icon: 'assets/icon/massinha.png' },

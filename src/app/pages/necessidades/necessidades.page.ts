@@ -8,7 +8,7 @@ import { FavoritosService } from '../../services/favoritos.service';
   standalone: false,
 })
 export class NecessidadesPage {
-  necessidades = [
+  frases = [
     { texto: 'Quero ir ao banheiro', icon: 'assets/icon/banheiro.png' },
     { texto: 'Estou com sede', icon: 'assets/icon/sede.png' },
     { texto: 'Estou com fome', icon: 'assets/icon/fome.png' },

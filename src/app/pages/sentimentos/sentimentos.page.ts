@@ -8,7 +8,7 @@ import { FavoritosService } from '../../services/favoritos.service';
   standalone: false,
 })
 export class SentimentosPage {
-  sentimentos = [
+  frases = [
     { texto: 'Estou feliz', icon: 'assets/icon/feliz.png' },
     { texto: 'Estou triste', icon: 'assets/icon/triste.png' },
     { texto: 'Estou com raiva', icon: 'assets/icon/raiva.png' },
