@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FavoritosService } from '../../services/favoritos.service';
 
 @Component({
   selector: 'app-locais',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class LocaisPage {
-  locais = [
+  frases = [
     { texto: 'Quero ir para casa', icon: 'assets/icon/casa.png' },
     { texto: 'Quero ir para escola', icon: 'assets/icon/escola.png' },
     { texto: 'Quero ir ao parquinho', icon: 'assets/icon/parquinho.png' },
@@ -16,9 +17,15 @@ export class LocaisPage {
     { texto: 'Quero sair', icon: 'assets/icon/sair.png' }
   ];
 
+  constructor(private favoritosService: FavoritosService) {}
+
   falar(texto: string) {
-    const fala = new SpeechSynthesisUtterance(texto);
-    fala.lang = 'pt-BR';
-    window.speechSynthesis.speak(fala);
+    const synth = window.speechSynthesis;
+    const utterThis = new SpeechSynthesisUtterance(texto);
+    synth.speak(utterThis);
+  }
+
+  favoritar(frase: string) {
+    this.favoritosService.adicionar(frase);
   }
 }

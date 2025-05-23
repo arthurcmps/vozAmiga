@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FavoritosService } from '../../services/favoritos.service'; // ajuste o caminho se necessário
+import { FavoritosService } from '../../services/favoritos.service';
 
 @Component({
   selector: 'app-alimentos',

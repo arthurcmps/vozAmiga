@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FavoritosService } from '../../services/favoritos.service';
 
 @Component({
   selector: 'app-brincar',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class BrincarPage {
-  brincadeiras = [
+  frases = [
     { texto: 'Quero brincar de bola', icon: 'assets/icon/bola.png' },
     { texto: 'Vamos desenhar', icon: 'assets/icon/desenhar.png' },
     { texto: 'Quero brincar de massinha', icon: 'assets/icon/massinha.png' },
@@ -16,9 +17,15 @@ export class BrincarPage {
     { texto: 'Quero brincar de esconde-esconde', icon: 'assets/icon/esconde.png' }
   ];
 
+  constructor(private favoritosService: FavoritosService) {}
+
   falar(texto: string) {
-    const fala = new SpeechSynthesisUtterance(texto);
-    fala.lang = 'pt-BR';
-    window.speechSynthesis.speak(fala);
+    const synth = window.speechSynthesis;
+    const utterThis = new SpeechSynthesisUtterance(texto);
+    synth.speak(utterThis);
+  }
+
+  favoritar(frase: string) {
+    this.favoritosService.adicionar(frase);
   }
 }

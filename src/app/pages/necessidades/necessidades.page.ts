@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FavoritosService } from '../../services/favoritos.service';
 
 @Component({
   selector: 'app-necessidades',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class NecessidadesPage {
-  necessidades = [
+  frases = [
     { texto: 'Quero ir ao banheiro', icon: 'assets/icon/banheiro.png' },
     { texto: 'Estou com sede', icon: 'assets/icon/sede.png' },
     { texto: 'Estou com fome', icon: 'assets/icon/fome.png' },
@@ -16,9 +17,15 @@ export class NecessidadesPage {
     { texto: 'Estou com frio', icon: 'assets/icon/frio.png' }
   ];
 
+  constructor(private favoritosService: FavoritosService) {}
+
   falar(texto: string) {
-    const fala = new SpeechSynthesisUtterance(texto);
-    fala.lang = 'pt-BR';
-    window.speechSynthesis.speak(fala);
+    const synth = window.speechSynthesis;
+    const utterThis = new SpeechSynthesisUtterance(texto);
+    synth.speak(utterThis);
+  }
+
+  favoritar(frase: string) {
+    this.favoritosService.adicionar(frase);
   }
 }
