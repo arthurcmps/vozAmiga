@@ -42,6 +42,14 @@ const routes: Routes = [
     path: 'favoritos',
     loadChildren: () => import('./pages/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
   },
+  {
+    path: 'cadastro',
+    loadChildren: () => import('./pages/cadastro/cadastro.module').then( m => m.CadastroPageModule)
+  },
+  {
+    path: 'recuperar-senha',
+    loadChildren: () => import('./pages/recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
+  },
 
 ];
 

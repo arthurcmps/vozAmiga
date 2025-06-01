@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Redefinir Senha</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-bg">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Email cadastrado</ion-label>
+      <ion-input type="email" [(ngModel)]="email" required></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" shape="round" color="primary" (click)="enviarLink()">
+    Enviar link de redefinição
+  </ion-button>
+</ion-content>
+<ion-button routerLink="/home">Voltar</ion-button>
