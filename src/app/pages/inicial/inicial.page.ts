@@ -28,3 +28,5 @@ export class InicialPage implements OnInit {
   }
 
 }
+
+

@@ -9,23 +9,33 @@ import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 })
 export class RecuperarSenhaPage {
   email: string = '';
+  mensagem: string = '';
+  sucesso: boolean = false;
+  loading: boolean = false;
 
   constructor() {}
 
   enviarLink() {
     if (!this.email) {
-      alert('Por favor, insira seu e-mail.');
+      this.mensagem = 'Por favor, insira seu e-mail.';
+      this.sucesso = false;
       return;
     }
+
+    this.loading = true;
+    this.mensagem = '';
 
     const auth = getAuth();
     sendPasswordResetEmail(auth, this.email)
       .then(() => {
-        alert('Link de redefinição enviado para seu e-mail.');
+        this.mensagem = 'Link de redefinição enviado para seu e-mail.';
+        this.sucesso = true;
+        this.loading = false;
       })
       .catch((error) => {
-        console.error('Erro ao enviar link:', error.code, error.message);
-        alert('Erro: ' + this.traduzErro(error.code));
+        this.mensagem = 'Erro: ' + this.traduzErro(error.code);
+        this.sucesso = false;
+        this.loading = false;
       });
   }
 
