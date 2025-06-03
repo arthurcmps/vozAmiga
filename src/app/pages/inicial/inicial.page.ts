@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { getAuth, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-inicial',
@@ -20,13 +21,19 @@ export class InicialPage implements OnInit {
 
   constructor(private navCtrl: NavController) { }
 
-  abrirCategoria(categoria: any){
+  ngOnInit() {}
+
+  abrirCategoria(categoria: any) {
     this.navCtrl.navigateForward(categoria.rota);
   }
 
-  ngOnInit() {
+  logout() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      this.navCtrl.navigateRoot('/home');
+    }).catch((error) => {
+      console.error('Erro ao fazer logout:', error);
+      alert('Erro ao sair. Tente novamente.');
+    });
   }
-
 }
-
-

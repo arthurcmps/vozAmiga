@@ -36,7 +36,7 @@ export class HomePage {
       case 'auth/invalid-email': return 'Email inválido.';
       case 'auth/user-not-found': return 'Usuário não encontrado.';
       case 'auth/wrong-password': return 'Senha incorreta.';
-      default: return 'Erro desconhecido.';
+      default: return 'Usuario ou senha inválidos.';
     }
   }
 }

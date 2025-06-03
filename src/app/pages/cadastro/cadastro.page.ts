@@ -42,7 +42,7 @@ export class CadastroPage {
       });
 
       alert('Conta criada com sucesso!');
-      this.router.navigate(['/']);
+      this.router.navigate(['/inicial']); // Redireciona para a tela inicial
     } catch (error: any) {
       console.error('Erro ao cadastrar:', error.code, error.message);
       alert(this.traduzErro(error.code));
@@ -55,6 +55,6 @@ export class CadastroPage {
       case 'auth/invalid-email': return 'E-mail inválido.';
       case 'auth/weak-password': return 'Senha fraca (mínimo 6 caracteres).';
       default: return 'Erro desconhecido.';
-    }
+    } 
   }
 }

@@ -16,9 +16,11 @@
     </ion-row>
 
     <div class="button-container">
-      <ion-button routerLink="/home" color="medium">
-        Voltar
+      <ion-button (click)="logout()" color="danger">
+       <ion-icon name="log-out-outline" slot="start"></ion-icon>
+         Sair
       </ion-button>
+
 
       <ion-button routerLink="/favoritos" color="warning">
         <ion-icon name="star" slot="start"></ion-icon>

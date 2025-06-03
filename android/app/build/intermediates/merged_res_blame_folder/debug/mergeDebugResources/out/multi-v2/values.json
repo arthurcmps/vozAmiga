@@ -97,9 +97,9 @@
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
-                        "startOffsets": "55",
+                        "startOffsets": "57",
                         "endColumns": "56",
-                        "endOffsets": "107"
+                        "endOffsets": "109"
                     },
                     "to": {
                         "startLines": "52",
@@ -152,9 +152,9 @@
                     "from": {
                         "startLines": "2,5,4,3",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "55,216,158,101",
+                        "startOffsets": "57,221,162,104",
                         "endColumns": "45,62,57,56",
-                        "endOffsets": "96,274,211,153"
+                        "endOffsets": "98,279,215,156"
                     },
                     "to": {
                         "startLines": "318,326,328,331",
@@ -224,10 +224,10 @@
                     "from": {
                         "startLines": "4,11,18",
                         "startColumns": "4,4,4",
-                        "startOffsets": "93,413,664",
+                        "startOffsets": "97,424,682",
                         "endLines": "9,15,20",
                         "endColumns": "12,12,12",
-                        "endOffsets": "407,657,810"
+                        "endOffsets": "416,672,830"
                     },
                     "to": {
                         "startLines": "337,343,348",
