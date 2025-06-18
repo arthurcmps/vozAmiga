@@ -1,0 +1,55 @@
+:host {
+  --cor-fundo: #F5F0E6;
+  --cor-card: #EBD9B4;
+  --cor-texto: #6E4B3A;
+  --cor-sucesso: #A3C586;
+  --cor-voltar: #6E4B3A;
+}
+
+ion-content.content-bg {
+  background-color: var(--cor-fundo);
+}
+
+ion-toolbar {
+  --background: #D7A86E;
+  --color: white;
+}
+
+ion-title {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.2rem;
+  color: white;
+}
+
+ion-item {
+  --background: transparent;
+  --color: var(--cor-texto);
+  background-color: rgba(235, 217, 180, 0.3);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(2px);
+}
+
+ion-label {
+  color: var(--cor-texto);
+  font-weight: 500;
+}
+
+ion-input {
+  --color: var(--cor-texto);
+}
+
+ion-button[color="success"] {
+  --background: var(--cor-sucesso);
+  --color: white;
+  font-weight: 500;
+  border-radius: 20px;
+  margin-top: 1rem;
+}
+
+ion-button[fill="clear"] {
+  --color: var(--cor-voltar);
+  font-weight: 500;
+  margin-top: 0.5rem;
+}

@@ -1,20 +1,65 @@
+:host {
+  --cor-fundo: #F5F0E6;
+  --cor-card: #EBD9B4;
+  --cor-texto: #6E4B3A;
+  --cor-botao: #D7A86E;
+  --cor-hover: #C9A27E;
+  --cor-outline: #6E4B3A;
+}
+
+ion-content.content-bg {
+  background-color: var(--cor-fundo);
+}
+
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .logo-container img {
   max-width: 150px;
+  height: auto;
+}
+
+ion-item {
+  --background: transparent;
+  --color: var(--cor-texto);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  background-color: rgba(235, 217, 180, 0.3); // leve fundo areia
+  backdrop-filter: blur(2px);
+}
+
+ion-label {
+  color: var(--cor-texto);
+  font-weight: 500;
+}
+
+ion-input {
+  --color: var(--cor-texto);
 }
 
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.75rem;
 }
 
-.content-bg {
-  --background: #fff8f0; 
+ion-button {
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
+  --color: white;
+  font-weight: 500;
+}
+
+ion-button[fill="clear"] {
+  --color: var(--cor-texto);
+}
+
+ion-button[fill="outline"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }
