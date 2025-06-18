@@ -34,8 +34,8 @@ export class AlimentosPage {
     await TextToSpeech.speak({
       text: texto,
       lang: 'pt-BR',
-      rate: 1.0,
-      pitch: 1.0,
+      rate: 0.95,
+      pitch: 1.05,
       volume: 1.0
     });
   }

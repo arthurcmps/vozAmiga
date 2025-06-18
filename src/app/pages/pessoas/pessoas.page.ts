@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FavoritosService } from '../../services/favoritos.service';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 @Component({
   selector: 'app-pessoas',
@@ -19,10 +20,14 @@ export class PessoasPage {
 
   constructor(private favoritosService: FavoritosService) {}
 
-  falar(texto: string) {
-    const synth = window.speechSynthesis;
-    const utterThis = new SpeechSynthesisUtterance(texto);
-    synth.speak(utterThis);
+  async falar(texto: string) {
+    await TextToSpeech.speak({
+      text: texto,
+      lang: 'pt-BR',
+      rate: 1.0,
+      pitch: 1.0,
+      volume: 1.0
+    });
   }
 
   favoritar(frase: string) {

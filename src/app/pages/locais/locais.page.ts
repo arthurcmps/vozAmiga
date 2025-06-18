@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FavoritosService } from '../../services/favoritos.service';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 @Component({
   selector: 'app-locais',
@@ -19,10 +20,14 @@ export class LocaisPage {
 
   constructor(private favoritosService: FavoritosService) {}
 
-  falar(texto: string) {
-    const synth = window.speechSynthesis;
-    const utterThis = new SpeechSynthesisUtterance(texto);
-    synth.speak(utterThis);
+  async falar(texto: string) {
+    await TextToSpeech.speak({
+      text: texto,
+      lang: 'pt-BR',
+      rate: 0.95,
+      pitch: 1.05,
+      volume: 1.0
+    });
   }
 
   favoritar(frase: string) {
