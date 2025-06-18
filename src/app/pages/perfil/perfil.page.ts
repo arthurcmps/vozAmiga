@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getAuth } from '@angular/fire/auth';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { doc, getDoc, updateDoc, Firestore } from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
 
@@ -22,20 +22,21 @@ export class PerfilPage implements OnInit {
 
   async ngOnInit() {
     const auth = getAuth();
-    const user = auth.currentUser;
 
-    if (user) {
-      this.uid = user.uid;
-      const docRef = doc(this.firestore, `usuarios/${this.uid}`);
-      const docSnap = await getDoc(docRef);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        this.uid = user.uid;
+        const docRef = doc(this.firestore, `usuarios/${this.uid}`);
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        this.nome = data['nome'];
-        this.email = data['email'];
-        this.telefone = data['telefone'];
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          this.nome = data['nome'] ?? '';
+          this.email = data['email'] ?? user.email ?? '';
+          this.telefone = data['telefone'] ?? '';
+        }
       }
-    }
+    });
   }
 
   async salvar() {

@@ -5,20 +5,26 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
+
+  <ion-item class="ion-margin-bottom">
+    <ion-icon name="person-outline" slot="start"></ion-icon>
     <ion-label position="stacked">Nome</ion-label>
-    <ion-input [(ngModel)]="nome"></ion-input>
+    <ion-input [(ngModel)]="nome" fill="outline"></ion-input>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="ion-margin-bottom">
+    <ion-icon name="mail-outline" slot="start"></ion-icon>
     <ion-label position="stacked">Email</ion-label>
-    <ion-input [(ngModel)]="email" readonly></ion-input>
+    <ion-input [(ngModel)]="email" readonly fill="outline"></ion-input>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="ion-margin-bottom">
+    <ion-icon name="call-outline" slot="start"></ion-icon>
     <ion-label position="stacked">Telefone</ion-label>
-    <ion-input [(ngModel)]="telefone"></ion-input>
+    <ion-input [(ngModel)]="telefone" fill="outline"></ion-input>
   </ion-item>
 
   <ion-button expand="full" color="primary" (click)="salvar()">Salvar</ion-button>
+  <ion-button expand="full" routerLink="/inicial">Voltar</ion-button>
+
 </ion-content>

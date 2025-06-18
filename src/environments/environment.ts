@@ -13,7 +13,8 @@ export const firebaseConfig = {
 
 export const environment = {
   production: true,
-  firebaseConfig: firebaseConfig
+  firebaseConfig: firebaseConfig,
+  bloquearAutoLogin: false,
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
