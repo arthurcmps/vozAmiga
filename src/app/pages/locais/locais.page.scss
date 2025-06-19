@@ -42,19 +42,27 @@ ion-card:hover {
   font-weight: 500;
 }
 
-ion-button {
-  --color: var(--cor-texto);
-}
-
-ion-button[color="warning"] {
-  --background: var(--cor-acento);
-  --color: white;
-}
-
 .button-container {
   margin-top: 1.5rem;
   display: flex;
   flex-direction: row;
   gap: 1rem;
   padding: 0 1rem;
+}
+
+ion-button {
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
+  --color: #D7A86E;
+  font-weight: 500;
+}
+
+ion-button[fill="clear"] {
+  --color: var(--cor-texto);
+}
+
+ion-button[fill="outline"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }

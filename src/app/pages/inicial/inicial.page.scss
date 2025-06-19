@@ -55,17 +55,19 @@ ion-card-content {
   padding: 0 1rem;
 }
 
-ion-button[color="danger"] {
-  --background: #b44d4d;
-  --color: white;
+ion-button {
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
+  --color: #D7A86E;
+  font-weight: 500;
 }
 
-ion-button[color="warning"] {
-  --background: var(--cor-acento);
-  --color: white;
+ion-button[fill="clear"] {
+  --color: var(--cor-texto);
 }
 
-ion-button[color="medium"] {
-  --background: #A3A380;
-  --color: white;
+ion-button[fill="outline"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }

@@ -12,7 +12,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" shape="round" color="primary" (click)="enviarLink()" [disabled]="loading">
+  <ion-button expand="block" shape="round" (click)="enviarLink()" [disabled]="loading">
     <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
     <span *ngIf="!loading">Enviar link de redefinição</span>
   </ion-button>

@@ -35,18 +35,25 @@ ion-label {
   font-size: 1rem;
 }
 
-ion-button[color="danger"] {
-  --color: var(--cor-perigo);
-}
-
 .button-container {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
 }
 
-ion-button[color="medium"] {
-  --background: var(--cor-voltar);
-  --color: white;
-  border-radius: 12px;
+ion-button {
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
+  --color: #D7A86E;
+  font-weight: 500;
+}
+
+ion-button[fill="clear"] {
+  --color: var(--cor-texto);
+}
+
+ion-button[fill="outline"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }

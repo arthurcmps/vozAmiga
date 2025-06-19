@@ -40,9 +40,9 @@ ion-input {
   --color: var(--cor-texto);
 }
 
-ion-button[color="success"] {
+ion-button {
   --background: var(--cor-sucesso);
-  --color: white;
+  --color: #6E4B3A;
   font-weight: 500;
   border-radius: 20px;
   margin-top: 1rem;
