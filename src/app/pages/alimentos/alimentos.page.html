@@ -9,6 +9,7 @@
     <ion-row>
       <ion-col size="6" *ngFor="let frase of frases">
         <ion-card (click)="falar(frase.texto)">
+          <img [src]="frase.icon" alt="{{ frase.texto }}"/>
           <ion-card-content class="frase-card">
             {{ frase.texto }}
             <ion-button

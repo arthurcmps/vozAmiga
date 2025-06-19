@@ -10,9 +10,7 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
 })
 export class AlimentosPage {
   frases = [
-    { texto: 'Quero comer.', icon: 'assets/icon/comer.png' },
     { texto: 'Estou com fome.', icon: 'assets/icon/fome.png' },
-    { texto: 'Estou comendo.', icon: 'assets/icon/comendo.png' },
     { texto: 'Quero arroz.', icon: 'assets/icon/arroz.png' },
     { texto: 'Quero carne.', icon: 'assets/icon/carne.png' },
     { texto: 'Quero feijão.', icon: 'assets/icon/feijao.png' },
