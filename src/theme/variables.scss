@@ -1,2 +1,15 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+/* Tema escuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #121212;
+    --ion-text-color: #ffffff;
+    --ion-card-background: #1e1e1e;
+    --cor-botao: #D7A86E;
+    --cor-hover: #b07a49;
+    --cor-texto: #ffffff;
+    --cor-outline: #D7A86E;
+  }
+}
