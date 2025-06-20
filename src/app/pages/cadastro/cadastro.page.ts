@@ -3,7 +3,6 @@ import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { doc, getFirestore, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cadastro',
@@ -24,15 +23,16 @@ export class CadastroPage {
     private toastController: ToastController
   ) {}
 
-  async mostrarMensagem(mensagem: string, tipo: 'success' | 'danger' = 'success') {
+  async mostrarMensagem(mensagem: string, tipo: 'success' | 'danger' = 'success'): Promise<void> {
     const toast = await this.toastController.create({
       message: mensagem,
-      duration: 3000,
+      duration: 2000,
       position: 'bottom',
       color: tipo,
     });
 
     await toast.present();
+    await toast.onDidDismiss(); // Espera o toast desaparecer
   }
 
   async cadastrar() {
@@ -45,7 +45,6 @@ export class CadastroPage {
     const firestore = getFirestore();
 
     try {
-      environment.bloquearAutoLogin = true;
       const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.senha);
       const uid = userCredential.user.uid;
 
@@ -56,10 +55,14 @@ export class CadastroPage {
         email: this.email,
       });
 
+      // Mostra o toast de sucesso e espera ele sumir
       await this.mostrarMensagem('Conta criada com sucesso! Faça login para continuar.', 'success');
 
+      // Desloga o usuário
       await auth.signOut();
-      this.router.navigate(['/login']);
+
+      // Redireciona para a tela de login (home)
+      this.router.navigate(['/home']);
 
     } catch (error: any) {
       console.error('Erro ao cadastrar:', error.code, error.message);

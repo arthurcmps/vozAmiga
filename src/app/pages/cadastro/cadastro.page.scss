@@ -41,15 +41,18 @@ ion-input {
 }
 
 ion-button {
-  --background: var(--cor-sucesso);
-  --color: #6E4B3A;
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
+  --color: #D7A86E;
   font-weight: 500;
-  border-radius: 20px;
-  margin-top: 1rem;
 }
 
 ion-button[fill="clear"] {
-  --color: var(--cor-voltar);
-  font-weight: 500;
-  margin-top: 0.5rem;
+  --color: var(--cor-texto);
+}
+
+ion-button[fill="round"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }

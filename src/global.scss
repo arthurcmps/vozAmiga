@@ -35,3 +35,26 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+.button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+/* Adiciona espaço no conteúdo para que os botões fixos não cubram o conteúdo */
+ion-content {
+  --padding-bottom: 100px;
+}
+
+.button-container ion-button {
+  flex: 1; /* Faz cada botão ocupar o mesmo espaço */
+}

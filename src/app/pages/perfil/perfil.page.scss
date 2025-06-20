@@ -41,18 +41,19 @@ ion-icon {
   color: var(--cor-texto);
 }
 
-ion-button[color="primary"] {
-  --background: var(--cor-primaria);
-  --color: white;
+ion-button {
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
+  --color: #D7A86E;
   font-weight: 500;
-  margin-top: 1rem;
-  border-radius: 12px;
 }
 
-ion-button {
-  margin-top: 0.5rem;
-  --background: var(--cor-secundaria);
-  --color: white;
-  font-weight: 500;
-  border-radius: 12px;
+ion-button[fill="clear"] {
+  --color: var(--cor-texto);
+}
+
+ion-button[fill="outline"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }
