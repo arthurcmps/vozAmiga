@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FavoritosService } from '../../services/favoritos.service';
+import { FavoritosService, Frase } from '../../services/favoritos.service';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 @Component({
@@ -9,7 +9,7 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
   standalone: false,
 })
 export class NecessidadesPage {
-  frases = [
+  frases: Frase[] = [
     { texto: 'Quero ir ao banheiro', icon: 'assets/icon/banheiro.png' },
     { texto: 'Estou com sede', icon: 'assets/icon/sede.png' },
     { texto: 'Estou com fome', icon: 'assets/icon/fome.png' },
@@ -18,7 +18,7 @@ export class NecessidadesPage {
     { texto: 'Estou com frio', icon: 'assets/icon/frio.png' }
   ];
 
-  constructor(private favoritosService: FavoritosService) {}
+  constructor(public favoritosService: FavoritosService) {}
 
   async falar(texto: string) {
     await TextToSpeech.speak({
@@ -30,7 +30,15 @@ export class NecessidadesPage {
     });
   }
 
-  favoritar(frase: string) {
-    this.favoritosService.adicionar(frase);
+  async alternarFavorito(frase: Frase) {
+    if (this.favoritosService.estaNosFavoritos(frase)) {
+      await this.favoritosService.remover(frase);
+    } else {
+      await this.favoritosService.adicionar(frase);
+    }
+  }
+
+  estaNosFavoritos(frase: Frase): boolean {
+    return this.favoritosService.estaNosFavoritos(frase);
   }
 }

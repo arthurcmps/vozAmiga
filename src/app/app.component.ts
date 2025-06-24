@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(private router: Router) {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-       
+      // Bloqueia redirecionamento automático se a flag estiver ativada
       if (environment.bloquearAutoLogin) return;
 
       if (user) {

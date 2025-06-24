@@ -22,37 +22,70 @@ ion-title {
   color: white;
 }
 
+/* Ajuste do grid para ocupar toda largura */
+ion-grid {
+  max-width: 600px; /* Limita a largura total do grid */
+  margin: 0 auto;   /* Centraliza o grid horizontalmente */
+  padding: 0 8px;   /* Padding interno para espaçamento */
+}
+
+ion-row {
+  margin: 0; /* Remove margem negativa para evitar corte */
+  justify-content: center; /* Centraliza colunas dentro da linha */
+  margin-left: -22px;
+}
+
+ion-col {
+  padding: 8px; /* Espaçamento entre colunas */
+  flex: 0 0 50%; /* Faz cada coluna ocupar 50% da linha (2 colunas) */
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+/* Cards maiores para preencher melhor */
 ion-card {
   background-color: var(--cor-card);
   color: var(--cor-texto);
   border-radius: 16px;
   box-shadow: 0 2px 6px rgba(110, 75, 58, 0.15);
   transition: transform 0.2s ease;
+  height: 220px; /* Altura maior */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  width: 100%; /* Preenche toda a coluna */
 }
 
 ion-card:hover {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 ion-img {
-  width: 100%;
-  height: 120px;
+  width: 90%; /* Imagem maior e centralizada */
+  height: 140px;
   object-fit: contain;
-  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
+/* Conteúdo do card */
 ion-card-content {
   font-weight: 500;
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0;
+  margin: 0;
 }
 
+/* Container dos botões */
 .button-container {
   margin-top: 2rem;
   display: flex;
   flex-direction: row;
   gap: 0.75rem;
   padding: 0 1rem;
+  justify-content: center;
 }
 
 ion-button {

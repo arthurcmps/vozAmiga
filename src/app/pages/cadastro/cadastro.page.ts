@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { doc, getFirestore, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cadastro',
@@ -12,7 +13,6 @@ import { ToastController } from '@ionic/angular';
 })
 export class CadastroPage {
   nomeCompleto: string = '';
-  dataNascimento: string = '';
   telefone: string = '';
   email: string = '';
   senha: string = '';
@@ -23,50 +23,57 @@ export class CadastroPage {
     private toastController: ToastController
   ) {}
 
-  async mostrarMensagem(mensagem: string, tipo: 'success' | 'danger' = 'success'): Promise<void> {
+  async mostrarToast(mensagem: string, tipo: 'success' | 'danger' = 'success') {
     const toast = await this.toastController.create({
       message: mensagem,
-      duration: 2000,
-      position: 'bottom',
+      duration: 2500,
       color: tipo,
+      position: 'bottom',
     });
-
     await toast.present();
-    await toast.onDidDismiss(); // Espera o toast desaparecer
   }
 
   async cadastrar() {
+    console.log('Iniciando cadastro...');
+
     if (this.senha !== this.confirmarSenha) {
-      await this.mostrarMensagem('As senhas não coincidem!', 'danger');
+      await this.mostrarToast('As senhas não coincidem!', 'danger');
       return;
     }
+
+    environment.bloquearAutoLogin = true;
 
     const auth = getAuth();
     const firestore = getFirestore();
 
     try {
+      console.log('Criando usuário...');
       const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.senha);
       const uid = userCredential.user.uid;
+      console.log('Usuário criado com UID:', uid);
 
+      console.log('Salvando dados no Firestore...');
       await setDoc(doc(firestore, 'usuarios', uid), {
         nomeCompleto: this.nomeCompleto,
-        dataNascimento: this.dataNascimento,
         telefone: this.telefone,
         email: this.email,
       });
 
-      // Mostra o toast de sucesso e espera ele sumir
-      await this.mostrarMensagem('Conta criada com sucesso! Faça login para continuar.', 'success');
-
-      // Desloga o usuário
+      console.log('Deslogando usuário...');
       await auth.signOut();
 
-      // Redireciona para a tela de login (home)
+      console.log('Mostrando toast de sucesso...');
+      await this.mostrarToast('Conta criada com sucesso! Faça login para continuar.', 'success');
+
+      await new Promise(resolve => setTimeout(resolve, 300));
+      environment.bloquearAutoLogin = false;
+      console.log('Redirecionando para /home...');
       this.router.navigate(['/home']);
 
     } catch (error: any) {
       console.error('Erro ao cadastrar:', error.code, error.message);
-      await this.mostrarMensagem(this.traduzErro(error.code), 'danger');
+      await this.mostrarToast(this.traduzErro(error.code), 'danger');
+      environment.bloquearAutoLogin = false;
     }
   }
 
@@ -79,3 +86,4 @@ export class CadastroPage {
     }
   }
 }
+ 

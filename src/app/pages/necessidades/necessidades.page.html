@@ -17,20 +17,22 @@
               fill="clear"
               color="warning"
               slot="end"
-              (click)="favoritar(necessidades.texto); $event.stopPropagation()"
+              (click)="alternarFavorito(necessidades); $event.stopPropagation()"
             >
-            <ion-icon name="star-outline"></ion-icon>
+              <ion-icon
+                [name]="estaNosFavoritos(necessidades) ? 'star' : 'star-outline'"
+              ></ion-icon>
             </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-      <div class="button-container">
-        <ion-button routerLink="/inicial">Voltar</ion-button>
+    <div class="button-container">
+      <ion-button routerLink="/inicial">Voltar</ion-button>
       <ion-button routerLink="/favoritos">
         <ion-icon name="star" slot="start"></ion-icon>
         Favoritos
       </ion-button>
-      </div>
+    </div>
   </ion-grid>
 </ion-content>

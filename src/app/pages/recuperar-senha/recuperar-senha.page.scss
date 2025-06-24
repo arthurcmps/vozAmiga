@@ -2,9 +2,8 @@
   --cor-fundo: #F5F0E6;
   --cor-card: #EBD9B4;
   --cor-texto: #6E4B3A;
-  --cor-primaria: #D7A86E;
   --cor-sucesso: #A3C586;
-  --cor-erro: #B44D4D;
+  --cor-voltar: #6E4B3A;
 }
 
 ion-content.content-bg {
@@ -12,22 +11,24 @@ ion-content.content-bg {
 }
 
 ion-toolbar {
-  --background: var(--cor-primaria);
+  --background: #D7A86E;
   --color: white;
 }
 
 ion-title {
   font-weight: bold;
-  font-size: 1.2rem;
   text-align: center;
+  font-size: 1.2rem;
   color: white;
 }
 
 ion-item {
-  --background: var(--cor-card);
+  --background: transparent;
   --color: var(--cor-texto);
+  background-color: rgba(235, 217, 180, 0.3);
   border-radius: 12px;
   margin-bottom: 1rem;
+  backdrop-filter: blur(2px);
 }
 
 ion-label {
@@ -40,18 +41,20 @@ ion-input {
 }
 
 ion-button {
-  --background: var(--cor-primaria);
-  --color: #6E4B3A;
-  font-weight: 500;
-  border-radius: 20px;
-  margin-top: 1rem;
-}
-
-ion-button[routerLink="/home"] {
-  margin-top: 1.5rem;
-  --background: transparent;
+  --background: var(--cor-botao);
+  --background-hover: var(--cor-hover);
   --color: #D7A86E;
   font-weight: 500;
+}
+
+ion-button[fill="clear"] {
+  --color: var(--cor-texto);
+}
+
+ion-button[fill="round"] {
+  --border-color: var(--cor-outline);
+  --color: var(--cor-outline);
+  border-radius: 20px;
 }
 
 .mensagem {
@@ -69,6 +72,6 @@ ion-button[routerLink="/home"] {
 }
 
 .erro {
-  background-color: var(--cor-erro);
+  background-color: #B44D4D;
   color: white;
 }

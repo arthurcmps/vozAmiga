@@ -12,25 +12,28 @@
           <img [src]="brincar.icon" alt="{{ brincar.texto }}" />
           <ion-card-content class="ion-text-center">
             {{ brincar.texto }}
-             <ion-button
+            <ion-button
               size="small"
               fill="clear"
               color="warning"
               slot="end"
-              (click)="favoritar(brincar.texto); $event.stopPropagation()"
+              (click)="alternarFavorito(brincar); $event.stopPropagation()"
             >
-            <ion-icon name="star-outline"></ion-icon>
+              <ion-icon
+                [name]="estaNosFavoritos(brincar) ? 'star' : 'star-outline'"
+              ></ion-icon>
             </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-      <div class="button-container">
+
+    <div class="button-container">
       <ion-button routerLink="/inicial">Voltar</ion-button>
       <ion-button routerLink="/favoritos">
         <ion-icon name="star" slot="start"></ion-icon>
         Favoritos
       </ion-button>
-      </div>
+    </div>
   </ion-grid>
 </ion-content>

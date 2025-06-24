@@ -6,30 +6,31 @@
 
 <ion-content class="ion-padding content-bg">
   <ion-list>
-    <ion-item>
-      <ion-label position="floating">Nome completo</ion-label>
-      <ion-input type="text" [(ngModel)]="nomeCompleto" required></ion-input>
-    </ion-item>
+<ion-item>
+  <ion-label for="nomeCompleto" position="floating">Nome completo</ion-label>
+  <ion-input id="nomeCompleto" type="text" [(ngModel)]="nomeCompleto" required></ion-input>
+</ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Telefone</ion-label>
-      <ion-input type="tel" [(ngModel)]="telefone" required></ion-input>
-    </ion-item>
+<ion-item>
+  <ion-label for="telefone" position="floating">Telefone</ion-label>
+  <ion-input id="telefone" type="tel" [(ngModel)]="telefone" required></ion-input>
+</ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email" required></ion-input>
-    </ion-item>
+<ion-item>
+  <ion-label for="email" position="floating">Email</ion-label>
+  <ion-input id="email" type="email" [(ngModel)]="email" required></ion-input>
+</ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="senha" required></ion-input>
-    </ion-item>
+<ion-item>
+  <ion-label for="senha" position="floating">Senha</ion-label>
+  <ion-input id="senha" type="password" [(ngModel)]="senha" required></ion-input>
+</ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirmar senha</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmarSenha" required></ion-input>
-    </ion-item>
+<ion-item>
+  <ion-label for="confirmarSenha" position="floating">Confirmar senha</ion-label>
+  <ion-input id="confirmarSenha" type="password" [(ngModel)]="confirmarSenha" required></ion-input>
+</ion-item>
+
   </ion-list>
 
   <ion-button expand="block" shape="round" (click)="cadastrar()">

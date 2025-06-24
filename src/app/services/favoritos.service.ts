@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 
+export interface Frase {
+  texto: string;
+  icon: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritosService {
-  private favoritos: string[] = [];
+  private favoritos: Frase[] = [];
 
   constructor(private storage: Storage) {
     this.init();
@@ -17,19 +22,23 @@ export class FavoritosService {
     this.favoritos = dados || [];
   }
 
-  getFavoritos() {
+  getFavoritos(): Frase[] {
     return this.favoritos;
   }
 
-  async adicionar(frase: string) {
-    if (!this.favoritos.includes(frase)) {
+  async adicionar(frase: Frase) {
+    if (!this.favoritos.some(f => f.texto === frase.texto)) {
       this.favoritos.push(frase);
       await this.storage.set('favoritos', this.favoritos);
     }
   }
 
-  async remover(frase: string) {
-    this.favoritos = this.favoritos.filter(f => f !== frase);
+  async remover(frase: Frase) {
+    this.favoritos = this.favoritos.filter(f => f.texto !== frase.texto);
     await this.storage.set('favoritos', this.favoritos);
+  }
+
+  estaNosFavoritos(frase: Frase): boolean {
+    return this.favoritos.some(f => f.texto === frase.texto);
   }
 }

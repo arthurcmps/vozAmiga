@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage-angular';
   standalone: false,
 })
 export class FavoritosPage {
-  frasesFavoritas: string[] = [];
+  frasesFavoritas: { texto: string, icon: string }[] = [];
 
   constructor(private storage: Storage) {
     this.initStorage();
@@ -21,7 +21,8 @@ export class FavoritosPage {
 
   async carregarFavoritos() {
     const dados = await this.storage.get('favoritos');
-    this.frasesFavoritas = dados || [];
+    this.frasesFavoritas = (dados || []).filter((f: { texto: string, icon: string }) => f && f.texto && f.icon);
+
   }
 
   async removerFavorito(index: number) {
@@ -29,10 +30,9 @@ export class FavoritosPage {
     await this.storage.set('favoritos', this.frasesFavoritas);
   }
 
-    falar(texto: string) {
+  falar(texto: string) {
     const fala = new SpeechSynthesisUtterance(texto);
     fala.lang = 'pt-BR';
     window.speechSynthesis.speak(fala);
   }
-
 }

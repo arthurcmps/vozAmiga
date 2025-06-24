@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FavoritosService } from '../../services/favoritos.service';
+import { FavoritosService, Frase } from '../../services/favoritos.service';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 @Component({
@@ -9,7 +9,7 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
   standalone: false,
 })
 export class AlimentosPage {
-  frases = [
+  frases: Frase[] = [
     { texto: 'Estou com fome.', icon: 'assets/icon/fome.png' },
     { texto: 'Quero arroz.', icon: 'assets/icon/arroz.png' },
     { texto: 'Quero carne.', icon: 'assets/icon/carne.png' },
@@ -26,7 +26,7 @@ export class AlimentosPage {
     { texto: 'Não quero mais.', icon: 'assets/icon/naoquero.png' },
   ];
 
-  constructor(private favoritosService: FavoritosService) {}
+  constructor(public favoritosService: FavoritosService) {}
 
   async falar(texto: string) {
     await TextToSpeech.speak({
@@ -34,11 +34,19 @@ export class AlimentosPage {
       lang: 'pt-BR',
       rate: 0.95,
       pitch: 1.05,
-      volume: 1.0
+      volume: 1.0,
     });
   }
 
-  favoritar(frase: string) {
-    this.favoritosService.adicionar(frase);
+  async alternarFavorito(frase: Frase) {
+    if (this.favoritosService.estaNosFavoritos(frase)) {
+      await this.favoritosService.remover(frase);
+    } else {
+      await this.favoritosService.adicionar(frase);
+    }
+  }
+
+  estaNosFavoritos(frase: Frase): boolean {
+    return this.favoritosService.estaNosFavoritos(frase);
   }
 }

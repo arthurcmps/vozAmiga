@@ -56,3 +56,13 @@ ion-button[fill="round"] {
   --color: var(--cor-outline);
   border-radius: 20px;
 }
+
+.alert-sucesso {
+  --background: #d4edda;
+  --color: #155724;
+}
+
+.alert-erro {
+  --ion-color-base: var(--ion-color-danger);
+  --ion-color-contrast: white;
+}

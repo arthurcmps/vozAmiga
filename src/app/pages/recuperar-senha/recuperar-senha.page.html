@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar>
     <ion-title class="ion-text-center">Redefinir Senha</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,7 +8,12 @@
   <ion-list>
     <ion-item>
       <ion-label position="floating">Email cadastrado</ion-label>
-      <ion-input type="email" [(ngModel)]="email" required [disabled]="loading"></ion-input>
+      <ion-input 
+        type="email" 
+        [(ngModel)]="email" 
+        required 
+        [disabled]="loading">
+      </ion-input>
     </ion-item>
   </ion-list>
 
@@ -16,9 +21,12 @@
     <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
     <span *ngIf="!loading">Enviar link de redefinição</span>
   </ion-button>
+  
+  <ion-button expand="block" fill="clear" routerLink="/home">
+    Voltar
+  </ion-button>
 
   <div *ngIf="mensagem" [ngClass]="{'sucesso': sucesso, 'erro': !sucesso}" class="mensagem">
     {{ mensagem }}
   </div>
 </ion-content>
-<ion-button routerLink="/home">Voltar</ion-button>
