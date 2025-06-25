@@ -10,13 +10,14 @@
       <ion-col size="6" *ngFor="let frase of frasesFavoritas; let i = index">
         <ion-card (click)="falar(frase.texto)">
           <img [src]="frase.icon" alt="{{ frase.texto }}" />
+
           <ion-card-content class="frase-card">
             {{ frase.texto }}
             <ion-button
               fill="clear"
               color="danger"
+              slot="end"
               (click)="removerFavorito(i); $event.stopPropagation()"
-              class="botao-remover"
             >
               <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
             </ion-button>

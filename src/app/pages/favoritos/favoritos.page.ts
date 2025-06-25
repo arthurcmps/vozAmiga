@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 @Component({
   selector: 'app-favoritos',
@@ -21,8 +22,7 @@ export class FavoritosPage {
 
   async carregarFavoritos() {
     const dados = await this.storage.get('favoritos');
-    this.frasesFavoritas = (dados || []).filter((f: { texto: string, icon: string }) => f && f.texto && f.icon);
-
+    this.frasesFavoritas = (dados || []).filter((f: any) => f?.texto && f?.icon);
   }
 
   async removerFavorito(index: number) {
@@ -30,9 +30,15 @@ export class FavoritosPage {
     await this.storage.set('favoritos', this.frasesFavoritas);
   }
 
-  falar(texto: string) {
-    const fala = new SpeechSynthesisUtterance(texto);
-    fala.lang = 'pt-BR';
-    window.speechSynthesis.speak(fala);
+  async falar(texto: string) {
+    if (texto) {
+      await TextToSpeech.speak({
+        text: texto,
+        lang: 'pt-BR',
+        rate: 0.95,
+        pitch: 1.05,
+        volume: 1.0,
+      });
+    }
   }
 }

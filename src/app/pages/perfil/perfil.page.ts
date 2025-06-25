@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import { doc, getDoc, updateDoc, Firestore } from '@angular/fire/firestore';
+import {
+  Firestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -14,43 +20,63 @@ export class PerfilPage implements OnInit {
   nome: string = '';
   email: string = '';
   telefone: string = '';
+  carregando: boolean = true;
 
   constructor(
     private firestore: Firestore,
     private alertController: AlertController
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     const auth = getAuth();
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         this.uid = user.uid;
-        const docRef = doc(this.firestore, `usuarios/${this.uid}`);
-        const docSnap = await getDoc(docRef);
+        this.email = user.email ?? '';
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          this.nome = data['nome'] ?? '';
-          this.email = data['email'] ?? user.email ?? '';
-          this.telefone = data['telefone'] ?? '';
+        const ref = doc(this.firestore, `usuarios/${this.uid}`);
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+          const dados = snap.data();
+          console.log('🔥 Dados do Firestore:', dados);
+
+          // Pega o nome salvo como nomeCompleto
+          this.nome = dados['nomeCompleto'] ?? '';
+          this.telefone = dados['telefone'] ?? '';
+        } else {
+          // Se não existir o documento, cria com os dados mínimos
+          await setDoc(ref, {
+            nomeCompleto: '',
+            telefone: '',
+            email: this.email,
+          });
         }
+
+        this.carregando = false;
+      } else {
+        console.warn('Nenhum usuário logado');
+        this.carregando = false;
       }
     });
   }
 
   async salvar() {
-    const docRef = doc(this.firestore, `usuarios/${this.uid}`);
-    await updateDoc(docRef, {
-      nome: this.nome,
+    if (!this.uid) return;
+
+    const ref = doc(this.firestore, `usuarios/${this.uid}`);
+    await updateDoc(ref, {
+      nomeCompleto: this.nome,
       telefone: this.telefone,
     });
 
-    const alert = await this.alertController.create({
+    const alerta = await this.alertController.create({
       header: 'Sucesso',
       message: 'Dados atualizados com sucesso!',
       buttons: ['OK'],
     });
-    await alert.present();
+
+    await alerta.present();
   }
 }
