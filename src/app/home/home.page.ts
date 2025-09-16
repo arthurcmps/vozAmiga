@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router, RouterLink } from '@angular/router';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { IonicModule } from '@ionic/angular';
@@ -18,11 +18,11 @@ export class HomePage {
   email: string = '';
   password: string = '';
 
-  constructor(private auth: Auth, private router: Router, private errorHandler: ErrorHandlerService) {}
+  constructor(private afAuth: AngularFireAuth, private router: Router, private errorHandler: ErrorHandlerService) {}
 
   async login() {
     try {
-      const userCredential = await signInWithEmailAndPassword(this.auth, this.email, this.password);
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
       const user = userCredential.user;
       console.log('Login bem-sucedido:', user);
       this.router.navigate(['/inicial']);
