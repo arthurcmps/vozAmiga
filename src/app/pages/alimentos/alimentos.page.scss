@@ -66,3 +66,7 @@ ion-button[fill="outline"] {
   --color: var(--cor-outline);
   border-radius: 20px;
 }
+
+.selecionado {
+  border: 4px solid var(--cor-acento);
+}

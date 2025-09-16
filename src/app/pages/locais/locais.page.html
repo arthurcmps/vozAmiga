@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicial"></ion-back-button>
+    </ion-buttons>
     <ion-title>Locais</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -7,29 +10,27 @@
 <ion-content class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let locais of frases">
-        <ion-card (click)="falar(locais.texto)">
-          <img [src]="locais.icon" alt="{{ locais.texto }}" />
+      <ion-col size="6" *ngFor="let local of frases">
+        <ion-card (click)="falar(local)" [class.selecionado]="local.selecionado" [ngClass]="pictogramClass">
+          <img [src]="local.icon" alt="{{ local.texto }}" />
           <ion-card-content class="ion-text-center">
-            {{ locais.texto }}
+            {{ local.texto }}
             <ion-button
               size="small"
               fill="clear"
               color="warning"
               slot="end"
-              (click)="alternarFavorito(locais); $event.stopPropagation()"
+              (click)="alternarFavorito(local); $event.stopPropagation()"
             >
               <ion-icon
-                [name]="estaNosFavoritos(locais) ? 'star' : 'star-outline'"
+                [name]="estaNosFavoritos(local) ? 'star' : 'star-outline'"
               ></ion-icon>
             </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-
     <div class="button-container">
-      <ion-button routerLink="/inicial">Voltar</ion-button>
       <ion-button routerLink="/favoritos">
         <ion-icon name="star" slot="start"></ion-icon>
         Favoritos

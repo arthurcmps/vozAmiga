@@ -1,33 +1,45 @@
 import { Component } from '@angular/core';
 import { FavoritosService, Frase } from '../../services/favoritos.service';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-pessoas',
   templateUrl: './pessoas.page.html',
   styleUrls: ['./pessoas.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [IonicModule, CommonModule, RouterLink]
 })
 export class PessoasPage {
   frases: Frase[] = [
-    { texto: 'Quero falar com a mamãe', icon: 'assets/icon/mamae.png' },
-    { texto: 'Quero falar com o papai', icon: 'assets/icon/papai.png' },
-    { texto: 'Quero falar com a professora', icon: 'assets/icon/professora.png' },
-    { texto: 'Quero falar com o amigo', icon: 'assets/icon/amigo.png' },
-    { texto: 'Quero ficar sozinho', icon: 'assets/icon/sozinho.png' },
-    { texto: 'Quero um abraço', icon: 'assets/icon/abraco.png' }
+    { texto: 'Oi, tudo bem?', icon: 'assets/icon/oi.png' },
+    { texto: 'Tchau', icon: 'assets/icon/tchau.png' },
+    { texto: 'Por favor', icon: 'assets/icon/por-favor.png' },
+    { texto: 'Com licença', icon: 'assets/icon/com-licenca.png' },
+    { texto: 'Me desculpe', icon: 'assets/icon/desculpa.png' },
+    { texto: 'Obrigado', icon: 'assets/icon/obrigado.png' }
   ];
 
-  constructor(public favoritosService: FavoritosService) {}
+  constructor(public favoritosService: FavoritosService, public configService: ConfigService) {}
 
-  async falar(texto: string) {
+  async falar(frase: Frase) {
+    this.frases.forEach(f => f.selecionado = false);
+    frase.selecionado = true;
+
     await TextToSpeech.speak({
-      text: texto,
+      text: frase.texto,
       lang: 'pt-BR',
-      rate: 1.0,
-      pitch: 1.0,
+      rate: this.configService.rate,
+      pitch: this.configService.pitch,
       volume: 1.0
     });
+
+    setTimeout(() => {
+      frase.selecionado = false;
+    }, 1000);
   }
 
   async alternarFavorito(frase: Frase) {
@@ -40,5 +52,9 @@ export class PessoasPage {
 
   estaNosFavoritos(frase: Frase): boolean {
     return this.favoritosService.estaNosFavoritos(frase);
+  }
+
+  get pictogramClass() {
+    return `pictogram-${this.configService.pictogramSize}`;
   }
 }

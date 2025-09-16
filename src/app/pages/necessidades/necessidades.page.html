@@ -7,20 +7,20 @@
 <ion-content class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let necessidades of frases">
-        <ion-card (click)="falar(necessidades.texto)">
-          <img [src]="necessidades.icon" alt="{{ necessidades.texto }}" />
+      <ion-col size="6" *ngFor="let necessidade of frases">
+        <ion-card (click)="falar(necessidade)" [class.selecionado]="necessidade.selecionado">
+          <img [src]="necessidade.icon" alt="{{ necessidade.texto }}" />
           <ion-card-content class="ion-text-center">
-            {{ necessidades.texto }}
+            {{ necessidade.texto }}
             <ion-button
               size="small"
               fill="clear"
               color="warning"
               slot="end"
-              (click)="alternarFavorito(necessidades); $event.stopPropagation()"
+              (click)="alternarFavorito(necessidade); $event.stopPropagation()"
             >
               <ion-icon
-                [name]="estaNosFavoritos(necessidades) ? 'star' : 'star-outline'"
+                [name]="estaNosFavoritos(necessidade) ? 'star' : 'star-outline'"
               ></ion-icon>
             </ion-button>
           </ion-card-content>

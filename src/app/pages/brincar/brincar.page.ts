@@ -1,33 +1,45 @@
 import { Component } from '@angular/core';
 import { FavoritosService, Frase } from '../../services/favoritos.service';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-brincar',
   templateUrl: './brincar.page.html',
   styleUrls: ['./brincar.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [IonicModule, CommonModule, RouterLink]
 })
 export class BrincarPage {
   frases: Frase[] = [
-    { texto: 'Quero brincar de bola', icon: 'assets/icon/bola.png' },
-    { texto: 'Vamos desenhar', icon: 'assets/icon/desenhar.png' },
-    { texto: 'Quero brincar de massinha', icon: 'assets/icon/massinha.png' },
-    { texto: 'Vamos jogar juntos', icon: 'assets/icon/jogar.png' },
-    { texto: 'Quero assistir desenho', icon: 'assets/icon/desenho.png' },
-    { texto: 'Quero brincar de esconde-esconde', icon: 'assets/icon/esconde.png' }
+    { texto: 'Vamos brincar?', icon: 'assets/icon/brincar.png' },
+    { texto: 'Meus brinquedos', icon: 'assets/icon/brinquedos.png' },
+    { texto: 'Quebra-cabeça', icon: 'assets/icon/quebra-cabeca.png' },
+    { texto: 'Assistir TV', icon: 'assets/icon/tv.png' },
+    { texto: 'Ouvir música', icon: 'assets/icon/musica.png' },
+    { texto: 'Ler uma história', icon: 'assets/icon/livro.png' }
   ];
 
-  constructor(public favoritosService: FavoritosService) {}
+  constructor(public favoritosService: FavoritosService, public configService: ConfigService) {}
 
-  async falar(texto: string) {
+  async falar(frase: Frase) {
+    this.frases.forEach(f => f.selecionado = false);
+    frase.selecionado = true;
+
     await TextToSpeech.speak({
-      text: texto,
+      text: frase.texto,
       lang: 'pt-BR',
-      rate: 0.95,
-      pitch: 1.05,
+      rate: this.configService.rate,
+      pitch: this.configService.pitch,
       volume: 1.0
     });
+
+    setTimeout(() => {
+      frase.selecionado = false;
+    }, 1000);
   }
 
   async alternarFavorito(frase: Frase) {
@@ -40,5 +52,9 @@ export class BrincarPage {
 
   estaNosFavoritos(frase: Frase): boolean {
     return this.favoritosService.estaNosFavoritos(frase);
+  }
+
+  get pictogramClass() {
+    return `pictogram-${this.configService.pictogramSize}`;
   }
 }

@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 export interface Frase {
   texto: string;
   icon: string;
+  selecionado?: boolean;
 }
 
 @Injectable({

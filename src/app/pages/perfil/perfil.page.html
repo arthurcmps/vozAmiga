@@ -1,30 +1,71 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicial"></ion-back-button>
+    </ion-buttons>
     <ion-title>Meu Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <ion-item class="ion-margin-bottom">
-    <ion-icon name="person-outline" slot="start"></ion-icon>
-    <ion-label position="stacked">Nome</ion-label>
-    <ion-input [(ngModel)]="nome" fill="outline"></ion-input>
-  </ion-item>
+  <div *ngIf="carregando" class="ion-text-center">
+    <ion-spinner></ion-spinner>
+  </div>
 
-  <ion-item class="ion-margin-bottom">
-    <ion-icon name="mail-outline" slot="start"></ion-icon>
-    <ion-label position="stacked">Email</ion-label>
-    <ion-input [(ngModel)]="email" readonly fill="outline"></ion-input>
-  </ion-item>
+  <div *ngIf="!carregando">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Dados Pessoais</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input [(ngModel)]="nome"></ion-input>
+      </ion-item>
 
-  <ion-item class="ion-margin-bottom">
-    <ion-icon name="call-outline" slot="start"></ion-icon>
-    <ion-label position="stacked">Telefone</ion-label>
-    <ion-input [(ngModel)]="telefone" fill="outline"></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input [(ngModel)]="email" readonly></ion-input>
+      </ion-item>
 
-  <ion-button expand="full" (click)="salvar()">Salvar</ion-button>
-  <ion-button expand="full" routerLink="/inicial">Voltar</ion-button>
+      <ion-item>
+        <ion-label position="stacked">Telefone</ion-label>
+        <ion-input [(ngModel)]="telefone"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="ion-margin-top">
+      <ion-list-header>
+        <ion-label>Preferências</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Velocidade da Voz</ion-label>
+        <ion-range [(ngModel)]="rate" min="0.5" max="2" step="0.1" snaps="true"></ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tom da Voz</ion-label>
+        <ion-range [(ngModel)]="pitch" min="0.5" max="2" step="0.1" snaps="true"></ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tamanho dos Pictogramas</ion-label>
+      </ion-item>
+      <ion-segment [(ngModel)]="pictogramSize">
+        <ion-segment-button value="pequeno">
+          <ion-label>Pequeno</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="medio">
+          <ion-label>Médio</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="grande">
+          <ion-label>Grande</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-list>
+
+    <ion-button expand="full" (click)="salvar()" class="ion-margin-top">Salvar</ion-button>
+  </div>
 
 </ion-content>

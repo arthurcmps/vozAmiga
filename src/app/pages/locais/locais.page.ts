@@ -1,33 +1,45 @@
 import { Component } from '@angular/core';
 import { FavoritosService, Frase } from '../../services/favoritos.service';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-locais',
   templateUrl: './locais.page.html',
   styleUrls: ['./locais.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [IonicModule, CommonModule, RouterLink]
 })
 export class LocaisPage {
   frases: Frase[] = [
-    { texto: 'Quero ir para casa', icon: 'assets/icon/casa.png' },
-    { texto: 'Quero ir para escola', icon: 'assets/icon/escola.png' },
-    { texto: 'Quero ir ao parquinho', icon: 'assets/icon/parquinho.png' },
-    { texto: 'Quero ir à sala', icon: 'assets/icon/sala.png' },
-    { texto: 'Quero ir ao quarto', icon: 'assets/icon/quarto.png' },
-    { texto: 'Quero sair', icon: 'assets/icon/sair.png' }
+    { texto: 'Casa', icon: 'assets/icon/casa.png' },
+    { texto: 'Escola', icon: 'assets/icon/escola.png' },
+    { texto: 'Hospital', icon: 'assets/icon/hospital.png' },
+    { texto: 'Parque', icon: 'assets/icon/parque.png' },
+    { texto: 'Supermercado', icon: 'assets/icon/supermercado.png' },
+    { texto: 'Restaurante', icon: 'assets/icon/restaurante.png' }
   ];
 
-  constructor(public favoritosService: FavoritosService) {}
+  constructor(public favoritosService: FavoritosService, public configService: ConfigService) {}
 
-  async falar(texto: string) {
+  async falar(frase: Frase) {
+    this.frases.forEach(f => f.selecionado = false);
+    frase.selecionado = true;
+
     await TextToSpeech.speak({
-      text: texto,
+      text: frase.texto,
       lang: 'pt-BR',
-      rate: 0.95,
-      pitch: 1.05,
+      rate: this.configService.rate,
+      pitch: this.configService.pitch,
       volume: 1.0
     });
+
+    setTimeout(() => {
+      frase.selecionado = false;
+    }, 1000);
   }
 
   async alternarFavorito(frase: Frase) {
@@ -40,5 +52,9 @@ export class LocaisPage {
 
   estaNosFavoritos(frase: Frase): boolean {
     return this.favoritosService.estaNosFavoritos(frase);
+  }
+
+  get pictogramClass() {
+    return `pictogram-${this.configService.pictogramSize}`;
   }
 }

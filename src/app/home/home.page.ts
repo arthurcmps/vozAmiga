@@ -1,42 +1,36 @@
 import { Component } from '@angular/core';
-import { Auth, getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Router, RouterLink } from '@angular/router';
+import { ErrorHandlerService } from '../services/error-handler.service';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [IonicModule, FormsModule, CommonModule, RouterLink]
 })
 export class HomePage {
 
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private auth: Auth, private router: Router, private errorHandler: ErrorHandlerService) {}
 
-  login() {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, this.email, this.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Login bem-sucedido:', user);
-        this.router.navigate(['/inicial']); // Redireciona para a tela inicial
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Erro no login:', errorCode, errorMessage);
-        alert('Erro ao entrar: ' + this.traduzErro(errorCode));
-      });
-  }
-
-  traduzErro(codigo: string): string {
-    switch (codigo) {
-      case 'auth/invalid-email': return 'Email inválido.';
-      case 'auth/user-not-found': return 'Usuário não encontrado.';
-      case 'auth/wrong-password': return 'Senha incorreta.';
-      default: return 'Usuario ou senha inválidos.';
+  async login() {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, this.email, this.password);
+      const user = userCredential.user;
+      console.log('Login bem-sucedido:', user);
+      this.router.navigate(['/inicial']);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Erro no login:', errorMessage);
+      alert('Erro ao entrar: ' + this.errorHandler.traduzErro(errorCode));
     }
   }
 }

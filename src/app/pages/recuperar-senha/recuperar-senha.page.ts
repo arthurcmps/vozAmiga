@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
+import { ErrorHandlerService } from '../../services/error-handler.service';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recuperar-senha',
   templateUrl: './recuperar-senha.page.html',
   styleUrls: ['./recuperar-senha.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [IonicModule, FormsModule, CommonModule, RouterLink]
 })
 export class RecuperarSenhaPage {
   email: string = '';
@@ -13,7 +19,7 @@ export class RecuperarSenhaPage {
   sucesso: boolean = false;
   loading: boolean = false;
 
-  constructor() {}
+  constructor(private errorHandler: ErrorHandlerService) {}
 
   enviarLink() {
     if (!this.email) {
@@ -33,17 +39,9 @@ export class RecuperarSenhaPage {
         this.loading = false;
       })
       .catch((error) => {
-        this.mensagem = 'Erro: ' + this.traduzErro(error.code);
+        this.mensagem = 'Erro: ' + this.errorHandler.traduzErro(error.code);
         this.sucesso = false;
         this.loading = false;
       });
-  }
-
-  traduzErro(codigo: string): string {
-    switch (codigo) {
-      case 'auth/invalid-email': return 'E-mail inválido.';
-      case 'auth/user-not-found': return 'Usuário não encontrado.';
-      default: return 'Erro desconhecido.';
-    }
   }
 }

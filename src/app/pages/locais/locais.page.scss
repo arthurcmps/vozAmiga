@@ -66,3 +66,28 @@ ion-button[fill="outline"] {
   --color: var(--cor-outline);
   border-radius: 20px;
 }
+
+.selecionado {
+  border: 4px solid var(--cor-acento);
+}
+
+/* Tamanho dos Pictogramas */
+.pictogram-pequeno ion-card-content {
+  font-size: 0.8rem;
+}
+
+.pictogram-medio ion-card-content {
+  font-size: 1rem;
+}
+
+.pictogram-grande ion-card {
+  /* Cards maiores na grade */
+}
+
+.pictogram-grande img {
+  height: 150px; /* Altura maior para a imagem */
+}
+
+.pictogram-grande ion-card-content {
+  font-size: 1.2rem;
+}

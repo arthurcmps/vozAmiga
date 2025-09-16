@@ -5,7 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadComponent: () => import('./home/home.page').then(m => m.HomePage)
   },
   {
     path: '',
@@ -19,32 +19,32 @@ const routes: Routes = [
   },
   {
     path: 'alimentos',
-    loadChildren: () => import('./pages/alimentos/alimentos.module').then(m => m.AlimentosPageModule),
+    loadComponent: () => import('./pages/alimentos/alimentos.page').then(m => m.AlimentosPage),
     canActivate: [AuthGuard]
   },
   {
     path: 'sentimentos',
-    loadChildren: () => import('./pages/sentimentos/sentimentos.module').then(m => m.SentimentosPageModule),
+    loadComponent: () => import('./pages/sentimentos/sentimentos.page').then(m => m.SentimentosPage),
     canActivate: [AuthGuard]
   },
   {
     path: 'brincar',
-    loadChildren: () => import('./pages/brincar/brincar.module').then(m => m.BrincarPageModule),
+    loadComponent: () => import('./pages/brincar/brincar.page').then(m => m.BrincarPage),
     canActivate: [AuthGuard]
   },
   {
     path: 'pessoas',
-    loadChildren: () => import('./pages/pessoas/pessoas.module').then(m => m.PessoasPageModule),
+    loadComponent: () => import('./pages/pessoas/pessoas.page').then(m => m.PessoasPage),
     canActivate: [AuthGuard]
   },
   {
     path: 'necessidades',
-    loadChildren: () => import('./pages/necessidades/necessidades.module').then(m => m.NecessidadesPageModule),
+    loadComponent: () => import('./pages/necessidades/necessidades.page').then(m => m.NecessidadesPage),
     canActivate: [AuthGuard]
   },
   {
     path: 'locais',
-    loadChildren: () => import('./pages/locais/locais.module').then(m => m.LocaisPageModule),
+    loadComponent: () => import('./pages/locais/locais.page').then(m => m.LocaisPage),
     canActivate: [AuthGuard]
   },
   {
@@ -58,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: 'recuperar-senha',
-    loadChildren: () => import('./pages/recuperar-senha/recuperar-senha.module').then(m => m.RecuperarSenhaPageModule)
+    loadComponent: () => import('./pages/recuperar-senha/recuperar-senha.page').then(m => m.RecuperarSenhaPage)
   },
   {
     path: 'perfil',

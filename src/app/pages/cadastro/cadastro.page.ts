@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { getAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Router, RouterLink } from '@angular/router';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.page.html',
   styleUrls: ['./cadastro.page.scss'],
-  standalone: false, 
+  standalone: true,
+  imports: [IonicModule, FormsModule, CommonModule, RouterLink] 
 })
 export class CadastroPage {
   nomeCompleto: string = '';
@@ -17,16 +20,15 @@ export class CadastroPage {
   telefone: string = '';
 
   constructor(
+    private auth: Auth,
     private firestore: Firestore,
     private alertController: AlertController,
     private router: Router
   ) {}
 
   async cadastrar() {
-    const auth = getAuth();
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.senha);
+      const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.senha);
       const uid = userCredential.user.uid;
 
       const ref = doc(this.firestore, `usuarios/${uid}`);
