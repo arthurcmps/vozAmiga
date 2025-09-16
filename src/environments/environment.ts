@@ -1,6 +1,3 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 export const firebaseConfig = {
   apiKey: "AIzaSyCd22zm_QslFWvh34i9bn2nnWwn9uKu8Hc",
   authDomain: "vozamiga-4f62c.firebaseapp.com",
@@ -16,6 +13,3 @@ export const environment = {
   firebaseConfig: firebaseConfig,
   bloquearAutoLogin: false,
 };
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
