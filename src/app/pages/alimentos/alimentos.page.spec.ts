@@ -1,17 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { AlimentosPage } from './alimentos.page';
+import { pageProviders } from '../../../testing/providers';
 
 describe('AlimentosPage', () => {
-  let component: AlimentosPage;
-  let fixture: ComponentFixture<AlimentosPage>;
+  it('renders its screen with resolved dependencies', async () => {
+    await TestBed.configureTestingModule({
+      imports: [IonicModule.forRoot(), CommonModule, RouterModule, AlimentosPage],
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AlimentosPage);
-    component = fixture.componentInstance;
+      providers: pageProviders(),
+    }).compileComponents();
+    const fixture = TestBed.createComponent(AlimentosPage);
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('ion-title').textContent).toContain('Alimentos');
   });
 });

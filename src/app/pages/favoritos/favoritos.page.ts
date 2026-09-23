@@ -1,44 +1,21 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage-angular';
-import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { FavoritosService, Frase } from '../../services/favoritos.service';
+import { ConfigService } from '../../services/config.service';
+import { VozService } from '../../services/voz.service';
+import { FrasesPage } from '../../shared/frases-page';
 
-@Component({
-  selector: 'app-favoritos',
-  templateUrl: './favoritos.page.html',
-  styleUrls: ['./favoritos.page.scss'],
-  standalone: false,
-})
-export class FavoritosPage {
-  frasesFavoritas: { texto: string, icon: string }[] = [];
-
-  constructor(private storage: Storage) {
-    this.initStorage();
+@Component({ selector: 'app-favoritos', templateUrl: './favoritos.page.html', styleUrls: ['./favoritos.page.scss'], standalone: false })
+export class FavoritosPage extends FrasesPage {
+  carregando = true;
+  constructor(favoritos: FavoritosService, config: ConfigService, voz: VozService) { super(favoritos, config, voz); }
+  override async ionViewWillEnter(): Promise<void> {
+    this.carregando = true;
+    await super.ionViewWillEnter();
+    this.carregando = false;
   }
-
-  async initStorage() {
-    await this.storage.create();
-    this.carregarFavoritos();
-  }
-
-  async carregarFavoritos() {
-    const dados = await this.storage.get('favoritos');
-    this.frasesFavoritas = (dados || []).filter((f: any) => f?.texto && f?.icon);
-  }
-
-  async removerFavorito(index: number) {
-    this.frasesFavoritas.splice(index, 1);
-    await this.storage.set('favoritos', this.frasesFavoritas);
-  }
-
-  async falar(texto: string) {
-    if (texto) {
-      await TextToSpeech.speak({
-        text: texto,
-        lang: 'pt-BR',
-        rate: 0.95,
-        pitch: 1.05,
-        volume: 1.0,
-      });
-    }
+  async removerFavorito(frase: Frase): Promise<void> {
+    this.erro = '';
+    try { await this.favoritosService.remover(frase); }
+    catch { this.erro = 'Não foi possível remover o favorito. Tente novamente.'; }
   }
 }

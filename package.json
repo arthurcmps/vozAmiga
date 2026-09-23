@@ -9,7 +9,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "android:sync": "npm run build && cap sync android",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
+    "check:assets": "node scripts/check-assets.cjs"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +26,7 @@
     "@angular/platform-browser-dynamic": "^19.2.12",
     "@angular/router": "^19.2.12",
     "@capacitor-community/text-to-speech": "^6.0.0",
-    "@capacitor/android": "7.2.0",
+    "@capacitor/android": "7.4.3",
     "@capacitor/app": "7.0.1",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/core": "^7.4.0",

@@ -1,93 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import {
-  Firestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from '@angular/fire/firestore';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ConfigService, PADRAO, Preferencias, normalizarPreferencias } from '../../services/config.service';
+import { ErrorHandlerService } from '../../services/error-handler.service';
 
-@Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.page.html',
-  styleUrls: ['./perfil.page.scss'],
-  standalone: true,
-  imports: [IonicModule, FormsModule, CommonModule]
-})
-export class PerfilPage implements OnInit {
-  uid: string = '';
-  nome: string = '';
-  email: string = '';
-  telefone: string = '';
-  rate: number = 1.0;
-  pitch: number = 1.0;
-  pictogramSize: string = 'medio';
-  carregando: boolean = true;
+@Component({ selector: 'app-perfil', templateUrl: './perfil.page.html', styleUrls: ['./perfil.page.scss'],
+  standalone: true, imports: [IonicModule, FormsModule, CommonModule] })
+export class PerfilPage {
+  uid = ''; nome = ''; email = ''; telefone = '';
+  rate = 1; pitch = 1; pictogramSize: Preferencias['pictogramSize'] = 'medio';
+  carregando = true; salvando = false; carregado = false; mensagem = ''; sucesso = false;
+  private generation = 0;
+  constructor(private auth: Auth, private firestore: Firestore, private config: ConfigService, private errors: ErrorHandlerService) {}
 
-  constructor(
-    private firestore: Firestore,
-    private alertController: AlertController
-  ) {}
-
-  ngOnInit() {
-    const auth = getAuth();
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        this.uid = user.uid;
-        this.email = user.email ?? '';
-
-        const ref = doc(this.firestore, `usuarios/${this.uid}`);
-        const snap = await getDoc(ref);
-
-        if (snap.exists()) {
-          const dados = snap.data();
-          this.nome = dados['nomeCompleto'] ?? '';
-          this.telefone = dados['telefone'] ?? '';
-          this.rate = dados['rate'] ?? 1.0;
-          this.pitch = dados['pitch'] ?? 1.0;
-          this.pictogramSize = dados['pictogramSize'] ?? 'medio';
-        } else {
-          await setDoc(ref, {
-            nomeCompleto: '',
-            telefone: '',
-            email: this.email,
-            rate: 1.0,
-            pitch: 1.0,
-            pictogramSize: 'medio',
-          });
-        }
-
-        this.carregando = false;
-      } else {
-        console.warn('Nenhum usuário logado');
-        this.carregando = false;
-      }
-    });
+  async ionViewWillEnter(): Promise<void> {
+    const generation = ++this.generation;
+    this.carregando = true; this.carregado = false; this.mensagem = ''; this.sucesso = false;
+    this.uid = ''; this.nome = ''; this.email = ''; this.telefone = ''; Object.assign(this, PADRAO);
+    try {
+      await this.auth.authStateReady();
+      const user = this.auth.currentUser;
+      if (!user) throw new Error('Sessão encerrada');
+      const snap = await getDoc(doc(this.firestore, `usuarios/${user.uid}`));
+      if (generation !== this.generation || this.auth.currentUser?.uid !== user.uid) return;
+      const dados = snap.data() ?? {};
+      this.uid = user.uid; this.email = user.email ?? '';
+      this.nome = dados['nomeCompleto'] ?? ''; this.telefone = dados['telefone'] ?? '';
+      Object.assign(this, normalizarPreferencias(dados));
+      this.carregado = true;
+    } catch (error: any) {
+      if (generation === this.generation) this.mensagem = this.errors.traduzErro(error.code);
+    } finally { if (generation === this.generation) this.carregando = false; }
   }
+  ionViewWillLeave(): void { ++this.generation; }
 
-  async salvar() {
-    if (!this.uid) return;
-
-    const ref = doc(this.firestore, `usuarios/${this.uid}`);
-    await updateDoc(ref, {
-      nomeCompleto: this.nome,
-      telefone: this.telefone,
-      rate: this.rate,
-      pitch: this.pitch,
-      pictogramSize: this.pictogramSize,
-    });
-
-    const alerta = await this.alertController.create({
-      header: 'Sucesso',
-      message: 'Dados atualizados com sucesso!',
-      buttons: ['OK'],
-    });
-
-    await alerta.present();
+  async salvar(): Promise<void> {
+    if (!this.carregado || this.salvando || !this.uid || this.auth.currentUser?.uid !== this.uid) return;
+    const generation = this.generation;
+    this.salvando = true; this.mensagem = ''; this.sucesso = false;
+    const preferencias = normalizarPreferencias({ rate: this.rate, pitch: this.pitch, pictogramSize: this.pictogramSize });
+    try {
+      await setDoc(doc(this.firestore, `usuarios/${this.uid}`), {
+        nomeCompleto: this.nome.trim(), telefone: this.telefone.trim(), email: this.email, ...preferencias,
+      }, { merge: true });
+      if (generation !== this.generation || this.auth.currentUser?.uid !== this.uid) return;
+      this.config.aplicar(preferencias);
+      this.sucesso = true; this.mensagem = 'Perfil e preferências atualizados.';
+    } catch (error: any) {
+      if (generation === this.generation) this.mensagem = this.errors.traduzErro(error.code);
+    } finally { this.salvando = false; }
   }
 }

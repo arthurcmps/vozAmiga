@@ -1,39 +1,14 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-title class="ion-text-center">
-      Voz Amiga
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding content-bg" fullscreen>
-  <div class="logo-container">
-    <img src="assets/Logo2.png" alt="Logo Voz Amiga" />
-  </div>
-
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="password" required></ion-input>
-    </ion-item>
-  </ion-list>
-
-  <div class="button-container ion-padding-top">
-    <ion-button expand="block" shape="round" size="large" (click)="login()">
-      Entrar
-    </ion-button>
-
-    <ion-button expand="block" fill="clear" size="small" routerLink="/recuperar-senha">
-      Esqueci minha senha
-    </ion-button>
-
-    <ion-button expand="block" fill="outline" size="small" routerLink="/cadastro">
-      Criar conta
-    </ion-button>
-  </div>
+<ion-header><ion-toolbar><ion-title>Voz Amiga</ion-title></ion-toolbar></ion-header>
+<ion-content class="ion-padding content-bg">
+  <div class="logo-container"><img src="assets/Logo2.png" alt="Voz Amiga" /></div>
+  <form (ngSubmit)="login()" #form="ngForm" class="form-container">
+    <ion-item><ion-input label="E-mail" labelPlacement="stacked" type="email" autocomplete="email" [(ngModel)]="email" name="email" required email [disabled]="loading"></ion-input></ion-item>
+    <ion-item><ion-input label="Senha" labelPlacement="stacked" type="password" autocomplete="current-password" [(ngModel)]="password" name="password" required [disabled]="loading"></ion-input></ion-item>
+    <p *ngIf="mensagem" role="alert" class="mensagem-erro">{{ mensagem }}</p>
+    <div class="button-container">
+      <ion-button type="submit" expand="block" [disabled]="loading || form.invalid">{{ loading ? 'Entrando…' : 'Entrar' }}</ion-button>
+      <ion-button fill="clear" routerLink="/recuperar-senha">Esqueci minha senha</ion-button>
+      <ion-button fill="outline" routerLink="/cadastro">Criar conta</ion-button>
+    </div>
+  </form>
 </ion-content>

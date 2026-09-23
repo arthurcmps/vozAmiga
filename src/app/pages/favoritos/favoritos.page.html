@@ -1,35 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Favoritos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<ion-header><ion-toolbar>
+  <ion-buttons slot="start"><ion-back-button defaultHref="/inicial" text="Voltar"></ion-back-button></ion-buttons>
+  <ion-title>Favoritos</ion-title>
+</ion-toolbar></ion-header>
 <ion-content class="ion-padding">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" *ngFor="let frase of frasesFavoritas; let i = index">
-        <ion-card (click)="falar(frase.texto)">
-          <img [src]="frase.icon" alt="{{ frase.texto }}" />
-
-          <ion-card-content class="frase-card">
-            {{ frase.texto }}
-            <ion-button
-              fill="clear"
-              color="danger"
-              slot="end"
-              (click)="removerFavorito(i); $event.stopPropagation()"
-            >
-              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-            </ion-button>
-          </ion-card-content>
+  <p *ngIf="erro" role="alert" class="mensagem-erro">{{ erro }}</p>
+  <p *ngIf="configService.error" role="status">{{ configService.error }}</p>
+  <p *ngIf="carregando" role="status">Carregando favoritos…</p>
+  <ng-container *ngIf="favoritosService.favoritos$ | async as favoritos">
+    <p *ngIf="!carregando && !erro && favoritos.length === 0" role="status">Você ainda não tem favoritos. Use a estrela ao lado de uma frase para adicioná-la.</p>
+    <ion-grid><ion-row>
+      <ion-col size="6" size-md="4" *ngFor="let frase of favoritos">
+        <ion-card class="pictogram-card" [class.selecionado]="frase.selecionado" [ngClass]="pictogramClass">
+          <button type="button" class="frase-falar" (click)="falar(frase)" [attr.aria-label]="'Falar: ' + frase.texto">
+            <img [src]="frase.icon" alt="" width="150" height="150" />
+            <span>{{ frase.texto }}</span>
+          </button>
+          <ion-button fill="clear" class="favorito-toggle" (click)="removerFavorito(frase)" [attr.aria-label]="'Remover dos favoritos: ' + frase.texto">
+            <ion-icon slot="icon-only" name="trash-outline" aria-hidden="true"></ion-icon>
+          </ion-button>
         </ion-card>
       </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <div class="button-container ion-padding">
-    <ion-button expand="block" routerLink="/inicial">
-      Voltar
-    </ion-button>
-  </div>
+    </ion-row></ion-grid>
+  </ng-container>
+  <div class="button-container"><ion-button routerLink="/inicial">Voltar às categorias</ion-button></div>
 </ion-content>
