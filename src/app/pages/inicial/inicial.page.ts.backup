@@ -12,12 +12,12 @@ import { signOut } from 'firebase/auth';
 export class InicialPage {
 
   categorias = [
-    {nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos'},
-    {nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/sentimentos'},
-    {nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/brincar'},
-    {nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/pessoas'},
-    {nome: 'Necessidades', icone: 'assets/icon/necessidades.png', rota: '/necessidades'},
-    {nome: 'Locais', icone: 'assets/icon/locais.png', rota: '/locais'},
+    { nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos' },
+    { nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/sentimentos' },
+    { nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/brincar' },
+    { nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/pessoas' },
+    { nome: 'Necessidades', icone: 'assets/icon/necessidades.png', rota: '/necessidades' },
+    { nome: 'Locais', icone: 'assets/icon/locais.png', rota: '/locais' },
   ];
 
   constructor(private navCtrl: NavController, private auth: Auth) { }
@@ -32,7 +32,13 @@ export class InicialPage {
     if (activeElement) {
       activeElement.blur();
 
+<<<<<<< HEAD
+      const shadowActive =
+        activeElement.shadowRoot?.activeElement as HTMLElement | null;
+
+=======
       const shadowActive = activeElement.shadowRoot?.activeElement as HTMLElement | null;
+>>>>>>> 3019acca12158454d0fe2746b2eb44b19ec4b4b9
       shadowActive?.blur();
     }
 
