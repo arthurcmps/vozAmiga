@@ -26,6 +26,19 @@ export class InicialPage {
     this.navCtrl.navigateForward(categoria.rota);
   }
 
+  abrirPerfil() {
+    const activeElement = document.activeElement as HTMLElement | null;
+
+    if (activeElement) {
+      activeElement.blur();
+
+      const shadowActive = activeElement.shadowRoot?.activeElement as HTMLElement | null;
+      shadowActive?.blur();
+    }
+
+    this.navCtrl.navigateForward('/perfil');
+  }
+
   logout() {
     signOut(this.auth).then(() => {
       this.navCtrl.navigateRoot('/home');
