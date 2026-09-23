@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { getAuth, signOut } from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
+import { signOut } from 'firebase/auth';
 
 @Component({
   selector: 'app-inicial',
@@ -8,7 +9,7 @@ import { getAuth, signOut } from '@angular/fire/auth';
   styleUrls: ['./inicial.page.scss'],
   standalone: false,
 })
-export class InicialPage implements OnInit {
+export class InicialPage {
 
   categorias = [
     {nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos'},
@@ -19,17 +20,14 @@ export class InicialPage implements OnInit {
     {nome: 'Locais', icone: 'assets/icon/locais.png', rota: '/locais'},
   ];
 
-  constructor(private navCtrl: NavController) { }
-
-  ngOnInit() {}
+  constructor(private navCtrl: NavController, private auth: Auth) { }
 
   abrirCategoria(categoria: any) {
     this.navCtrl.navigateForward(categoria.rota);
   }
 
   logout() {
-    const auth = getAuth();
-    signOut(auth).then(() => {
+    signOut(this.auth).then(() => {
       this.navCtrl.navigateRoot('/home');
     }).catch((error) => {
       console.error('Erro ao fazer logout:', error);

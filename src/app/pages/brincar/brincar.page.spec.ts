@@ -1,17 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { BrincarPage } from './brincar.page';
+import { pageProviders } from '../../../testing/providers';
 
 describe('BrincarPage', () => {
-  let component: BrincarPage;
-  let fixture: ComponentFixture<BrincarPage>;
+  it('renders its screen with resolved dependencies', async () => {
+    await TestBed.configureTestingModule({
+      imports: [IonicModule.forRoot(), CommonModule, RouterModule, BrincarPage],
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BrincarPage);
-    component = fixture.componentInstance;
+      providers: pageProviders(),
+    }).compileComponents();
+    const fixture = TestBed.createComponent(BrincarPage);
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('ion-title').textContent).toContain('Brincar');
   });
 });

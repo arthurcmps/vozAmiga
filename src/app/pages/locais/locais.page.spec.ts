@@ -1,17 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { LocaisPage } from './locais.page';
+import { pageProviders } from '../../../testing/providers';
 
 describe('LocaisPage', () => {
-  let component: LocaisPage;
-  let fixture: ComponentFixture<LocaisPage>;
+  it('renders its screen with resolved dependencies', async () => {
+    await TestBed.configureTestingModule({
+      imports: [IonicModule.forRoot(), CommonModule, RouterModule, LocaisPage],
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LocaisPage);
-    component = fixture.componentInstance;
+      providers: pageProviders(),
+    }).compileComponents();
+    const fixture = TestBed.createComponent(LocaisPage);
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('ion-title').textContent).toContain('Locais');
   });
 });

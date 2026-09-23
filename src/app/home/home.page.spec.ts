@@ -1,24 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
+import { pageProviders } from '../../testing/providers';
 
 describe('HomePage', () => {
-  let component: HomePage;
-  let fixture: ComponentFixture<HomePage>;
-
-  beforeEach(async () => {
+  it('renders its screen with resolved dependencies', async () => {
     await TestBed.configureTestingModule({
-      declarations: [HomePage],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), CommonModule, RouterModule, HomePage],
+
+      providers: pageProviders(),
     }).compileComponents();
-
-    fixture = TestBed.createComponent(HomePage);
-    component = fixture.componentInstance;
+    const fixture = TestBed.createComponent(HomePage);
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('ion-title').textContent).toContain('Voz Amiga');
   });
 });

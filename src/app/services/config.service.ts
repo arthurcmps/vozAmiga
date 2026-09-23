@@ -1,38 +1,55 @@
-import { Injectable } from '@angular/core';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, onSnapshot, Unsubscribe } from 'firebase/firestore';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ConfigService {
-  // Valores padrão
-  public rate: number = 1.0;
-  public pitch: number = 1.0;
-  public pictogramSize: string = 'medio';
+export interface Preferencias {
+  rate: number;
+  pitch: number;
+  pictogramSize: 'pequeno' | 'medio' | 'grande';
+}
+export const PADRAO: Preferencias = { rate: 1, pitch: 1, pictogramSize: 'medio' };
+export function normalizarPreferencias(data: Partial<Preferencias>): Preferencias {
+  const limitar = (value: unknown): number => typeof value === 'number' && Number.isFinite(value)
+    ? Math.max(0.5, Math.min(2, value)) : 1;
+  return {
+    rate: limitar(data.rate), pitch: limitar(data.pitch),
+    pictogramSize: data.pictogramSize === 'pequeno' || data.pictogramSize === 'grande'
+      ? data.pictogramSize : 'medio',
+  };
+}
 
-  constructor(private firestore: Firestore) {
-    this.loadConfig();
-  }
+@Injectable({ providedIn: 'root' })
+export class ConfigService implements OnDestroy {
+  private preferencias = { ...PADRAO };
+  private stopAuth: Unsubscribe;
+  private stopProfile?: Unsubscribe;
+  private generation = 0;
+  error = '';
+  get rate(): number { return this.preferencias.rate; }
+  get pitch(): number { return this.preferencias.pitch; }
+  get pictogramSize(): Preferencias['pictogramSize'] { return this.preferencias.pictogramSize; }
 
-  loadConfig() {
-    const auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
+  constructor(private auth: Auth, private firestore: Firestore) {
+    this.stopAuth = onAuthStateChanged(auth, user => {
+      const generation = ++this.generation;
+      this.stopProfile?.();
+      this.preferencias = { ...PADRAO };
+      this.error = '';
       if (user) {
-        const ref = doc(this.firestore, `usuarios/${user.uid}`);
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          const dados = snap.data();
-          this.rate = dados['rate'] ?? 1.0;
-          this.pitch = dados['pitch'] ?? 1.0;
-          this.pictogramSize = dados['pictogramSize'] ?? 'medio';
-        }
-      } else {
-        // Resetar para os padrões se o usuário fizer logout
-        this.rate = 1.0;
-        this.pitch = 1.0;
-        this.pictogramSize = 'medio';
+        this.stopProfile = onSnapshot(doc(this.firestore, `usuarios/${user.uid}`), snapshot => {
+          if (generation === this.generation) {
+            this.aplicar(snapshot.data() ?? {});
+            this.error = '';
+          }
+        }, () => {
+          if (generation === this.generation) this.error = 'Preferências indisponíveis. Usando as configurações locais desta sessão.';
+        });
       }
     });
   }
+
+  aplicar(data: Partial<Preferencias>): void { this.preferencias = normalizarPreferencias(data); }
+  ngOnDestroy(): void { this.generation++; this.stopProfile?.(); this.stopAuth(); }
 }
