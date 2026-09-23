@@ -33,6 +33,7 @@ export class PerfilPage {
       Object.assign(this, normalizarPreferencias(dados));
       this.carregado = true;
     } catch (error: any) {
+      console.error('[Perfil] Erro ao carregar perfil:', error);
       if (generation === this.generation) this.mensagem = this.errors.traduzErro(error.code);
     } finally { if (generation === this.generation) this.carregando = false; }
   }
@@ -51,6 +52,7 @@ export class PerfilPage {
       this.config.aplicar(preferencias);
       this.sucesso = true; this.mensagem = 'Perfil e preferências atualizados.';
     } catch (error: any) {
+      console.error('[Perfil] Erro ao salvar perfil:', error);
       if (generation === this.generation) this.mensagem = this.errors.traduzErro(error.code);
     } finally { this.salvando = false; }
   }
