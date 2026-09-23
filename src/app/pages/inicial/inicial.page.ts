@@ -12,18 +12,33 @@ import { signOut } from 'firebase/auth';
 export class InicialPage {
 
   categorias = [
-    {nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos'},
-    {nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/sentimentos'},
-    {nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/brincar'},
-    {nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/pessoas'},
-    {nome: 'Necessidades', icone: 'assets/icon/necessidades.png', rota: '/necessidades'},
-    {nome: 'Locais', icone: 'assets/icon/locais.png', rota: '/locais'},
+    { nome: 'Alimentos', icone: 'assets/icon/alimentos.png', rota: '/alimentos' },
+    { nome: 'Sentimentos', icone: 'assets/icon/sentimentos.png', rota: '/sentimentos' },
+    { nome: 'Brincar', icone: 'assets/icon/brincar.png', rota: '/brincar' },
+    { nome: 'Pessoas', icone: 'assets/icon/pessoas.png', rota: '/pessoas' },
+    { nome: 'Necessidades', icone: 'assets/icon/necessidades.png', rota: '/necessidades' },
+    { nome: 'Locais', icone: 'assets/icon/locais.png', rota: '/locais' },
   ];
 
   constructor(private navCtrl: NavController, private auth: Auth) { }
 
   abrirCategoria(categoria: any) {
     this.navCtrl.navigateForward(categoria.rota);
+  }
+
+  abrirPerfil() {
+    const activeElement = document.activeElement as HTMLElement | null;
+
+    if (activeElement) {
+      activeElement.blur();
+
+      const shadowActive =
+        activeElement.shadowRoot?.activeElement as HTMLElement | null;
+
+      shadowActive?.blur();
+    }
+
+    this.navCtrl.navigateForward('/perfil');
   }
 
   logout() {

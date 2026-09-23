@@ -8,14 +8,16 @@ import { CommonModule } from '@angular/common';
 import { ConfigService, PADRAO, Preferencias, normalizarPreferencias } from '../../services/config.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 
-@Component({ selector: 'app-perfil', templateUrl: './perfil.page.html', styleUrls: ['./perfil.page.scss'],
-  standalone: true, imports: [IonicModule, FormsModule, CommonModule] })
+@Component({
+  selector: 'app-perfil', templateUrl: './perfil.page.html', styleUrls: ['./perfil.page.scss'],
+  standalone: true, imports: [IonicModule, FormsModule, CommonModule]
+})
 export class PerfilPage {
   uid = ''; nome = ''; email = ''; telefone = '';
   rate = 1; pitch = 1; pictogramSize: Preferencias['pictogramSize'] = 'medio';
   carregando = true; salvando = false; carregado = false; mensagem = ''; sucesso = false;
   private generation = 0;
-  constructor(private auth: Auth, private firestore: Firestore, private config: ConfigService, private errors: ErrorHandlerService) {}
+  constructor(private auth: Auth, private firestore: Firestore, private config: ConfigService, private errors: ErrorHandlerService) { }
 
   async ionViewWillEnter(): Promise<void> {
     const generation = ++this.generation;
