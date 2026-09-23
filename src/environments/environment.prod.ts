@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCd22zm_QslFWvh34i9bn2nnWwn9uKu8Hc",
-  authDomain: "vozamiga-4f62c.firebaseapp.com",
-  projectId: "vozamiga-4f62c",
-  storageBucket: "vozamiga-4f62c.firebasestorage.app",
-  messagingSenderId: "868814127084",
-  appId: "1:868814127084:web:7de201588f19f0c88ccac9",
-  measurementId: "G-HZ3ENE2VKY"
+  apiKey: "AIzaSyDgRA0grZlej1O9tWVG4buxPHdxisWGLKI",
+  authDomain: "voz-amiga-353e7.firebaseapp.com",
+  projectId: "voz-amiga-353e7",
+  storageBucket: "voz-amiga-353e7.firebasestorage.app",
+  messagingSenderId: "338111365218",
+  appId: "1:338111365218:web:37a785233b61da2b51513b",
+  measurementId: "G-EL1X3JS2PX"
 };
 
 export const environment = {
